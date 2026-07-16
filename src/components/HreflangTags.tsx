@@ -1,4 +1,4 @@
-import { DOMAIN_MARKETS } from './domains.config';
+import { DOMAIN_MARKETS, PRIMARY_DOMAIN } from '@/lib/domains.config';
 
 /**
  * Renders <link rel="alternate" hreflang="..."> tags for every domain
@@ -27,7 +27,7 @@ export function HreflangTags({ pathname }: { pathname: string }) {
       <link
         rel="alternate"
         hrefLang="x-default"
-        href={`https://electricyachtmarket.com${pathname}`}
+        href={`https://${PRIMARY_DOMAIN.domain}${pathname}`}
       />
     </>
   );

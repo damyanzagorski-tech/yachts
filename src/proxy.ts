@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { resolveMarket } from './domains.config';
+import { resolveMarket } from '@/lib/domains.config';
 
 /**
  * Resolves the incoming domain to a market (language/country), then
@@ -14,7 +14,7 @@ import { resolveMarket } from './domains.config';
  * (English) market rather than erroring — safer default for any domain
  * that gets pointed here before its config entry is added.
  */
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const host = request.headers.get('host') ?? '';
   const market = resolveMarket(host);
 

@@ -42,13 +42,13 @@ export default function RootLayout({
             <Link href="/" className="font-serif text-base font-light normal-case tracking-[0.1em]">
               Electric <em className="text-copper">Yacht</em> Market
             </Link>
-            <Link href="/manufacturers" className="text-ink-soft transition-colors hover:text-copper">
+            <Link href="/manufacturers" className="text-muted transition-colors hover:text-copper">
               Manufacturers
             </Link>
-            <Link href="/models" className="text-ink-soft transition-colors hover:text-copper">
+            <Link href="/models" className="text-muted transition-colors hover:text-copper">
               Models
             </Link>
-            <Link href="/guides" className="text-ink-soft transition-colors hover:text-copper">
+            <Link href="/guides" className="text-muted transition-colors hover:text-copper">
               Guides
             </Link>
           </nav>

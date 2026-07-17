@@ -73,7 +73,7 @@ export default async function GuideDetailPage({ params }: PageProps) {
     <main className="mx-auto max-w-2xl px-6 py-16">
       <Link
         href="/guides"
-        className="block text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft hover:text-copper"
+        className="block text-xs font-semibold uppercase tracking-[0.16em] text-muted hover:text-copper"
       >
         ← All guides
       </Link>
@@ -82,7 +82,7 @@ export default async function GuideDetailPage({ params }: PageProps) {
         <span className="marker">{CONTENT_TYPE_LABELS[guide.content_page_groups.content_type]}</span>
       </div>
       <h1 className="mt-3 font-serif text-3xl font-light tracking-tight">{guide.title}</h1>
-      {guide.meta_description && <p className="mt-4 text-lg text-ink-soft">{guide.meta_description}</p>}
+      {guide.meta_description && <p className="mt-4 text-lg text-muted">{guide.meta_description}</p>}
 
       <div className="markdown-body mt-8" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
 

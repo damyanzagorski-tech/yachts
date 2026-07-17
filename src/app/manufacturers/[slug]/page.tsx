@@ -53,64 +53,69 @@ export default async function ManufacturerDetailPage({ params }: PageProps) {
   const models = await getModelsForManufacturer(manufacturer.id);
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-16">
+    <main className="mx-auto max-w-6xl px-6 py-16">
       <Link
         href="/manufacturers"
-        className="block text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft hover:text-copper"
+        className="block text-xs font-semibold uppercase tracking-[0.16em] text-muted hover:text-copper"
       >
         ← All manufacturers
       </Link>
 
-      <div className="mt-6">
-        <span className="marker">{manufacturer.country ?? 'Manufacturer'}</span>
-      </div>
-      <h1 className="mt-3 font-serif text-3xl font-light tracking-tight">{manufacturer.name}</h1>
-      <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft">
-        {manufacturer.product_line === 'electric_only' ? 'Electric only' : 'Mixed electric/conventional'}
-        {manufacturer.is_verified && ' · Verified'}
-      </p>
+      <div className="mt-10 grid gap-12 md:grid-cols-[1fr_1.3fr] md:gap-20">
+        <div className="md:sticky md:top-10 md:self-start">
+          <span className="marker">{manufacturer.country ?? 'Manufacturer'}</span>
+          <h1 className="mt-3 font-serif text-4xl font-light tracking-tight">{manufacturer.name}</h1>
+          <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
+            {manufacturer.product_line === 'electric_only' ? 'Electric only' : 'Mixed electric/conventional'}
+            {manufacturer.is_verified && ' · Verified'}
+          </p>
 
-      {manufacturer.website && (
-        <a
-          href={manufacturer.website}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-4 inline-block text-sm font-semibold text-copper hover:text-copper-soft"
-        >
-          Visit website ↗
-        </a>
-      )}
+          {manufacturer.website && (
+            <a
+              href={manufacturer.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block text-sm font-semibold text-copper hover:text-copper-soft"
+            >
+              Visit website ↗
+            </a>
+          )}
 
-      {manufacturer.description && (
-        <p className="mt-6 max-w-2xl text-ink-soft">{manufacturer.description}</p>
-      )}
+          {manufacturer.description && <p className="mt-6 max-w-md text-muted">{manufacturer.description}</p>}
 
-      {manufacturer.founded_year && (
-        <div className="spec-row mt-6 max-w-xs">
-          <span className="spec-label">Founded</span>
-          <span className="spec-value">{manufacturer.founded_year}</span>
+          {manufacturer.founded_year && (
+            <div className="spec-row mt-6 max-w-xs">
+              <span className="spec-label">Founded</span>
+              <span className="spec-value">{manufacturer.founded_year}</span>
+            </div>
+          )}
         </div>
-      )}
 
-      <h2 className="mt-12 mb-4 font-serif text-xl font-light">
-        Models <span className="text-copper">({models.length})</span>
-      </h2>
+        <div>
+          <h2 className="mb-4 font-serif text-xl font-light">
+            Models <span className="text-copper">({models.length})</span>
+          </h2>
 
-      {models.length === 0 && <p className="text-ink-soft">No models listed for this manufacturer yet.</p>}
+          {models.length === 0 && <p className="text-muted">No models listed for this manufacturer yet.</p>}
 
-      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {models.map((model) => (
-          <li key={model.id} className="rounded-lg border border-rule p-5 transition-colors hover:border-copper">
-            <Link href={`/models/${model.slug}`} className="font-serif text-lg hover:text-copper">
-              {model.name}
-            </Link>
-            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft">
-              {model.category.replace('_', ' ')}
-            </p>
-            <p className="mt-2 font-serif text-sm italic text-copper">{formatPrice(model)}</p>
-          </li>
-        ))}
-      </ul>
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {models.map((model) => (
+              <li
+                key={model.id}
+                className="rounded-lg border border-rule bg-ink-2 p-5 transition-colors hover:border-copper"
+              >
+                <Link href={`/models/${model.slug}`} className="font-serif text-lg hover:text-copper">
+                  {model.name}
+                </Link>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
+                  {model.category.replace('_', ' ')}
+                </p>
+                <p className="mt-2 font-serif text-sm italic text-copper">{formatPrice(model)}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </main>
   );
 }

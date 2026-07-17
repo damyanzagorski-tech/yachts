@@ -33,7 +33,7 @@ export function ModelCompareList({ models }: { models: ModelWithManufacturer[] }
           return (
             <li
               key={model.id}
-              className="flex items-start gap-3 rounded-lg border border-rule p-5 transition-colors hover:border-copper"
+              className="flex items-start gap-3 rounded-lg border border-rule bg-ink-2 p-5 transition-colors hover:border-copper"
             >
               <input
                 type="checkbox"
@@ -47,7 +47,7 @@ export function ModelCompareList({ models }: { models: ModelWithManufacturer[] }
                 <Link href={`/models/${model.slug}`} className="font-serif text-lg hover:text-copper">
                   {model.name}
                 </Link>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft">
+                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
                   {model.manufacturers?.name} · {model.category.replace('_', ' ')}
                 </p>
                 <p className="mt-2 font-serif text-sm italic text-copper">{formatPrice(model)}</p>
@@ -59,7 +59,7 @@ export function ModelCompareList({ models }: { models: ModelWithManufacturer[] }
 
       {selected.length > 0 && (
         <div className="fixed inset-x-0 bottom-0 flex items-center justify-between border-t border-rule bg-background px-6 py-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
             {selected.length} selected{selected.length >= MAX_COMPARE && ` (max ${MAX_COMPARE})`}
           </p>
           <Link
@@ -68,7 +68,7 @@ export function ModelCompareList({ models }: { models: ModelWithManufacturer[] }
             className={
               selected.length >= 2
                 ? 'rounded-full bg-copper px-5 py-2 text-sm font-semibold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-copper-soft'
-                : 'cursor-not-allowed rounded-full border border-rule-strong px-5 py-2 text-sm font-semibold uppercase tracking-[0.1em] text-ink-soft'
+                : 'cursor-not-allowed rounded-full bg-ink-soft px-5 py-2 text-sm font-semibold uppercase tracking-[0.1em] text-muted'
             }
           >
             Compare {selected.length >= 2 ? `(${selected.length})` : ''}

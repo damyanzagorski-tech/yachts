@@ -71,7 +71,7 @@ export default async function ComparePage({ searchParams }: PageProps) {
     return (
       <main className="mx-auto max-w-4xl px-6 py-16">
         <h1 className="mb-4 font-serif text-3xl font-light tracking-tight">Compare</h1>
-        <p className="text-ink-soft">
+        <p className="text-muted">
           Pick a couple of models to compare from the{' '}
           <Link href="/models" className="text-copper hover:text-copper-soft">
             models page
@@ -86,7 +86,7 @@ export default async function ComparePage({ searchParams }: PageProps) {
     return (
       <main className="mx-auto max-w-4xl px-6 py-16">
         <h1 className="mb-4 font-serif text-3xl font-light tracking-tight">Compare</h1>
-        <p className="text-ink-soft">
+        <p className="text-muted">
           Couldn&apos;t find enough matching models to compare. Head back to the{' '}
           <Link href="/models" className="text-copper hover:text-copper-soft">
             models page
@@ -99,7 +99,7 @@ export default async function ComparePage({ searchParams }: PageProps) {
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-16">
-      <Link href="/models" className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft hover:text-copper">
+      <Link href="/models" className="text-xs font-semibold uppercase tracking-[0.16em] text-muted hover:text-copper">
         ← All models
       </Link>
 
@@ -116,7 +116,7 @@ export default async function ComparePage({ searchParams }: PageProps) {
             <tr>
               <th className="w-40" />
               {models.map((m) => (
-                <th key={m.id} className="border-b border-rule-strong px-4 py-3 text-left">
+                <th key={m.id} className="border-b border-rule-strong bg-ink-soft px-4 py-3 text-left">
                   <Link href={`/models/${m.slug}`} className="font-serif text-base hover:text-copper">
                     {m.name}
                   </Link>
@@ -127,7 +127,7 @@ export default async function ComparePage({ searchParams }: PageProps) {
           <tbody>
             {ROWS.map((row) => (
               <tr key={row.label}>
-                <th className="border-b border-rule px-4 py-2 text-left text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">
+                <th className="border-b border-rule px-4 py-2 text-left text-xs font-semibold uppercase tracking-[0.14em] text-muted">
                   {row.label}
                 </th>
                 {models.map((m) => (

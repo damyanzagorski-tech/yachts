@@ -67,76 +67,85 @@ export default async function ModelDetailPage({ params }: PageProps) {
   const powertrains = await getPowertrains(model.id);
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-16">
+    <main className="mx-auto max-w-6xl px-6 py-16">
       <Link
         href="/models"
-        className="block text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft hover:text-copper"
+        className="block text-xs font-semibold uppercase tracking-[0.16em] text-muted hover:text-copper"
       >
         ← All models
       </Link>
 
-      <div className="mt-6">
-        <span className="marker">{model.category.replace('_', ' ')}</span>
+      <div className="mt-10 grid gap-12 md:grid-cols-[1fr_1.3fr] md:gap-20">
+        <div className="md:sticky md:top-10 md:self-start">
+          <span className="marker">{model.category.replace('_', ' ')}</span>
+          <h1 className="mt-3 font-serif text-4xl font-light tracking-tight">{model.name}</h1>
+          <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
+            <Link href={`/manufacturers/${model.manufacturers.slug}`} className="hover:text-copper">
+              {model.manufacturers.name}
+            </Link>{' '}
+            · {model.propulsion_type === 'hybrid_electric' ? 'Hybrid electric' : 'Electric'}
+            {model.market_tier && ` · ${model.market_tier.replace('_', ' ')}`}
+          </p>
+
+          <p className="mt-4 font-serif text-2xl font-light italic text-copper">{formatPriceRange(model)}</p>
+
+          {model.description && <p className="mt-6 max-w-md text-muted">{model.description}</p>}
+        </div>
+
+        <div>
+          <h2 className="mb-2 font-serif text-xl font-light">Specifications</h2>
+          <dl>
+            <Spec label="Length" value={model.length_m ? `${model.length_m} m` : null} />
+            <Spec label="Beam" value={model.beam_m ? `${model.beam_m} m` : null} />
+            <Spec label="Draft" value={model.draft_m ? `${model.draft_m} m` : null} />
+            <Spec label="Weight" value={model.weight_kg ? `${model.weight_kg.toLocaleString('en-EU')} kg` : null} />
+            <Spec label="Passenger capacity" value={model.passenger_capacity} />
+            <Spec label="Battery" value={model.battery_kwh ? `${model.battery_kwh} kWh` : null} />
+            <Spec label="Motor power" value={model.motor_power_kw ? `${model.motor_power_kw} kW` : null} />
+            <Spec label="Top speed" value={model.top_speed_knots ? `${model.top_speed_knots} knots` : null} />
+            <Spec label="Range" value={model.range_nm ? `${model.range_nm} nm` : null} />
+            <Spec
+              label="Charging time"
+              value={model.charging_time_hours ? `${model.charging_time_hours} hours` : null}
+            />
+            <Spec label="CE category" value={model.ce_category} />
+          </dl>
+
+          {powertrains.length > 0 && (
+            <>
+              <h2 className="mt-10 mb-4 font-serif text-xl font-light">
+                Powertrain options{' '}
+                {powertrains.length > 1 && <span className="text-copper">({powertrains.length})</span>}
+              </h2>
+              <ul className="flex flex-col gap-4">
+                {powertrains.map((pt) => (
+                  <li key={pt.id} className="rounded-lg border border-rule bg-ink-2 p-5">
+                    <p className="font-serif text-lg">
+                      {[pt.motor_brand, pt.motor_model].filter(Boolean).join(' ') ||
+                        'Motor/battery details not disclosed'}
+                      {pt.is_primary && powertrains.length > 1 && (
+                        <span className="badge ml-2 align-middle">Primary</span>
+                      )}
+                    </p>
+                    <dl className="mt-2 grid grid-cols-2 gap-x-4">
+                      <Spec label="Motors" value={pt.motor_count > 1 ? `${pt.motor_count}x` : null} />
+                      <Spec label="Power" value={pt.motor_power_kw ? `${pt.motor_power_kw} kW` : null} />
+                      <Spec
+                        label="Battery"
+                        value={pt.battery_kwh ? `${pt.battery_kwh} kWh (${pt.battery_brand ?? 'unspecified brand'})` : null}
+                      />
+                      <Spec label="Top speed" value={pt.top_speed_knots ? `${pt.top_speed_knots} kn` : null} />
+                      <Spec label="Range" value={pt.range_nm ? `${pt.range_nm} nm` : null} />
+                      <Spec label="Price" value={pt.price_from_eur ? eurFormatter.format(pt.price_from_eur) : null} />
+                    </dl>
+                    {pt.notes && <p className="mt-3 text-sm text-muted">{pt.notes}</p>}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
       </div>
-      <h1 className="mt-3 font-serif text-3xl font-light tracking-tight">{model.name}</h1>
-      <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft">
-        <Link href={`/manufacturers/${model.manufacturers.slug}`} className="hover:text-copper">
-          {model.manufacturers.name}
-        </Link>{' '}
-        · {model.propulsion_type === 'hybrid_electric' ? 'Hybrid electric' : 'Electric'}
-        {model.market_tier && ` · ${model.market_tier.replace('_', ' ')}`}
-      </p>
-
-      <p className="mt-3 font-serif text-2xl font-light italic text-copper">{formatPriceRange(model)}</p>
-
-      {model.description && <p className="mt-6 max-w-2xl text-ink-soft">{model.description}</p>}
-
-      <h2 className="mt-10 mb-2 font-serif text-xl font-light">Specifications</h2>
-      <dl className="max-w-md">
-        <Spec label="Length" value={model.length_m ? `${model.length_m} m` : null} />
-        <Spec label="Beam" value={model.beam_m ? `${model.beam_m} m` : null} />
-        <Spec label="Draft" value={model.draft_m ? `${model.draft_m} m` : null} />
-        <Spec label="Weight" value={model.weight_kg ? `${model.weight_kg.toLocaleString('en-EU')} kg` : null} />
-        <Spec label="Passenger capacity" value={model.passenger_capacity} />
-        <Spec label="Battery" value={model.battery_kwh ? `${model.battery_kwh} kWh` : null} />
-        <Spec label="Motor power" value={model.motor_power_kw ? `${model.motor_power_kw} kW` : null} />
-        <Spec label="Top speed" value={model.top_speed_knots ? `${model.top_speed_knots} knots` : null} />
-        <Spec label="Range" value={model.range_nm ? `${model.range_nm} nm` : null} />
-        <Spec
-          label="Charging time"
-          value={model.charging_time_hours ? `${model.charging_time_hours} hours` : null}
-        />
-        <Spec label="CE category" value={model.ce_category} />
-      </dl>
-
-      {powertrains.length > 0 && (
-        <>
-          <h2 className="mt-10 mb-4 font-serif text-xl font-light">
-            Powertrain options {powertrains.length > 1 && <span className="text-copper">({powertrains.length})</span>}
-          </h2>
-          <ul className="flex flex-col gap-4">
-            {powertrains.map((pt) => (
-              <li key={pt.id} className="rounded-lg border border-rule p-5">
-                <p className="font-serif text-lg">
-                  {[pt.motor_brand, pt.motor_model].filter(Boolean).join(' ') || 'Motor/battery details not disclosed'}
-                  {pt.is_primary && powertrains.length > 1 && (
-                    <span className="badge ml-2 align-middle">Primary</span>
-                  )}
-                </p>
-                <dl className="mt-2 grid grid-cols-2 gap-x-4">
-                  <Spec label="Motors" value={pt.motor_count > 1 ? `${pt.motor_count}x` : null} />
-                  <Spec label="Power" value={pt.motor_power_kw ? `${pt.motor_power_kw} kW` : null} />
-                  <Spec label="Battery" value={pt.battery_kwh ? `${pt.battery_kwh} kWh (${pt.battery_brand ?? 'unspecified brand'})` : null} />
-                  <Spec label="Top speed" value={pt.top_speed_knots ? `${pt.top_speed_knots} kn` : null} />
-                  <Spec label="Range" value={pt.range_nm ? `${pt.range_nm} nm` : null} />
-                  <Spec label="Price" value={pt.price_from_eur ? eurFormatter.format(pt.price_from_eur) : null} />
-                </dl>
-                {pt.notes && <p className="mt-3 text-sm text-ink-soft">{pt.notes}</p>}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
     </main>
   );
 }

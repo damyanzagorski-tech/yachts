@@ -7,30 +7,39 @@ export async function generateMetadata() {
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center bg-background">
-      <main className="flex w-full max-w-3xl flex-1 flex-col items-center justify-center gap-8 px-16 py-32 text-center">
-        <span className="marker">The database</span>
-        <h1 className="font-serif text-4xl font-light tracking-tight sm:text-5xl">
-          Electric <em className="text-copper">Yacht</em> Market
-        </h1>
-        <p className="max-w-md text-lg text-ink-soft">
-          Electric and hybrid-electric yacht manufacturers and models, tracked and compared.
-        </p>
-        <div className="flex gap-4">
-          <Link
-            href="/manufacturers"
-            className="rounded-full bg-copper px-6 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-paper transition-colors hover:bg-copper-soft"
-          >
-            Manufacturers
-          </Link>
-          <Link
-            href="/models"
-            className="rounded-full border border-rule-strong px-6 py-3 text-sm font-semibold uppercase tracking-[0.14em] transition-colors hover:border-copper hover:text-copper"
-          >
-            Models
-          </Link>
+    <main className="flex flex-1 items-center bg-background">
+      <div className="mx-auto grid w-full max-w-6xl gap-12 px-6 py-24 sm:px-10 md:grid-cols-[1.5fr_1fr] md:items-end md:gap-20">
+        <div>
+          <span className="marker">The database</span>
+          <h1 className="mt-6 font-serif text-6xl font-light leading-[0.95] tracking-tight sm:text-7xl md:text-8xl">
+            Electric
+            <br />
+            <em className="text-copper">Yacht</em>
+            <br />
+            Market
+          </h1>
         </div>
-      </main>
-    </div>
+
+        <div className="flex flex-col gap-8 md:pb-2">
+          <p className="max-w-xs font-serif text-xl font-light italic text-muted">
+            Electric and hybrid-electric yacht manufacturers and models, tracked and compared.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <Link
+              href="/manufacturers"
+              className="rounded-full bg-copper px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-paper transition-colors hover:bg-copper-soft"
+            >
+              Manufacturers
+            </Link>
+            <Link
+              href="/models"
+              className="rounded-full border border-rule-strong px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:border-copper hover:text-copper"
+            >
+              Models
+            </Link>
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }

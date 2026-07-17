@@ -63,6 +63,29 @@ export type ModelWithManufacturer = Model & {
   manufacturers: Pick<Manufacturer, 'id' | 'name' | 'slug' | 'logo_url' | 'country'>;
 };
 
+export type ModelPowertrain = {
+  id: string;
+  model_id: string;
+  propulsion_type: PropulsionType;
+  is_primary: boolean;
+  motor_brand: string | null;
+  motor_model: string | null;
+  motor_count: number;
+  motor_power_kw: number | null;
+  battery_brand: string | null;
+  battery_kwh: number | null;
+  charging_time_hours: number | null;
+  fast_charge_minutes: number | null;
+  top_speed_knots: number | null;
+  cruise_speed_knots: number | null;
+  range_nm: number | null;
+  range_at_knots: number | null;
+  price_from_eur: number | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -75,6 +98,11 @@ export type Database = {
         Row: Model;
         Insert: Partial<Model>;
         Update: Partial<Model>;
+      };
+      model_powertrains: {
+        Row: ModelPowertrain;
+        Insert: Partial<ModelPowertrain>;
+        Update: Partial<ModelPowertrain>;
       };
     };
   };

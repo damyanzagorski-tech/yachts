@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Electric Yacht Market",
   description: "Electric and hybrid-electric yacht manufacturers and models.",
+  // TODO: remove before public launch — blocks all search indexing (see next.config.ts too).
   robots: {
     index: false,
     follow: false,

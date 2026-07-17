@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { ModelCompareList } from '@/components/ModelCompareList';
 import type { ModelWithManufacturer } from '@/lib/supabase/types';
 
 export const metadata = {
@@ -21,14 +21,6 @@ async function getModels(): Promise<{ data: ModelWithManufacturer[]; error: stri
   }
 }
 
-function formatPrice(model: ModelWithManufacturer): string {
-  if (!model.price_from_eur) return 'Price on request';
-  const from = new Intl.NumberFormat('en-EU', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(
-    model.price_from_eur
-  );
-  return `From ${from}`;
-}
-
 export default async function ModelsPage() {
   const { data: models, error } = await getModels();
 
@@ -47,19 +39,7 @@ export default async function ModelsPage() {
         <p className="text-zinc-600 dark:text-zinc-400">No models found.</p>
       )}
 
-      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {models.map((model) => (
-          <li key={model.id} className="rounded-lg border border-black/[.08] p-4 dark:border-white/[.145]">
-            <Link href={`/models/${model.slug}`} className="font-medium hover:underline">
-              {model.name}
-            </Link>
-            <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-              {model.manufacturers?.name} · {model.category.replace('_', ' ')}
-            </p>
-            <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{formatPrice(model)}</p>
-          </li>
-        ))}
-      </ul>
+      {models.length > 0 && <ModelCompareList models={models} />}
     </main>
   );
 }

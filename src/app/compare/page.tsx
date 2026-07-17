@@ -70,10 +70,10 @@ export default async function ComparePage({ searchParams }: PageProps) {
   if (requestedSlugs.length === 0) {
     return (
       <main className="mx-auto max-w-4xl px-6 py-16">
-        <h1 className="mb-4 text-2xl font-semibold tracking-tight">Compare</h1>
-        <p className="text-zinc-600 dark:text-zinc-400">
+        <h1 className="mb-4 font-serif text-3xl font-light tracking-tight">Compare</h1>
+        <p className="text-ink-soft">
           Pick a couple of models to compare from the{' '}
-          <Link href="/models" className="underline">
+          <Link href="/models" className="text-copper hover:text-copper-soft">
             models page
           </Link>
           .
@@ -85,10 +85,10 @@ export default async function ComparePage({ searchParams }: PageProps) {
   if (models.length < 2) {
     return (
       <main className="mx-auto max-w-4xl px-6 py-16">
-        <h1 className="mb-4 text-2xl font-semibold tracking-tight">Compare</h1>
-        <p className="text-zinc-600 dark:text-zinc-400">
+        <h1 className="mb-4 font-serif text-3xl font-light tracking-tight">Compare</h1>
+        <p className="text-ink-soft">
           Couldn&apos;t find enough matching models to compare. Head back to the{' '}
-          <Link href="/models" className="underline">
+          <Link href="/models" className="text-copper hover:text-copper-soft">
             models page
           </Link>{' '}
           and select at least two.
@@ -99,13 +99,13 @@ export default async function ComparePage({ searchParams }: PageProps) {
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-16">
-      <Link href="/models" className="text-sm text-zinc-600 hover:underline dark:text-zinc-400">
+      <Link href="/models" className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft hover:text-copper">
         ← All models
       </Link>
 
-      <h1 className="mt-4 mb-2 text-2xl font-semibold tracking-tight">Compare</h1>
+      <h1 className="mt-4 mb-2 font-serif text-3xl font-light tracking-tight">Compare</h1>
       {requestedSlugs.length > MAX_COMPARE && (
-        <p className="mb-4 text-sm text-amber-700 dark:text-amber-400">
+        <p className="mb-4 text-sm text-copper">
           Showing the first {MAX_COMPARE} of {requestedSlugs.length} selected models.
         </p>
       )}
@@ -116,8 +116,8 @@ export default async function ComparePage({ searchParams }: PageProps) {
             <tr>
               <th className="w-40" />
               {models.map((m) => (
-                <th key={m.id} className="border-b border-black/[.08] px-4 py-3 text-left dark:border-white/[.145]">
-                  <Link href={`/models/${m.slug}`} className="font-medium hover:underline">
+                <th key={m.id} className="border-b border-rule-strong px-4 py-3 text-left">
+                  <Link href={`/models/${m.slug}`} className="font-serif text-base hover:text-copper">
                     {m.name}
                   </Link>
                 </th>
@@ -127,11 +127,11 @@ export default async function ComparePage({ searchParams }: PageProps) {
           <tbody>
             {ROWS.map((row) => (
               <tr key={row.label}>
-                <th className="border-b border-black/[.06] px-4 py-2 text-left font-normal text-zinc-600 dark:border-white/[.1] dark:text-zinc-400">
+                <th className="border-b border-rule px-4 py-2 text-left text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">
                   {row.label}
                 </th>
                 {models.map((m) => (
-                  <td key={m.id} className="border-b border-black/[.06] px-4 py-2 dark:border-white/[.1]">
+                  <td key={m.id} className="border-b border-rule px-4 py-2 font-serif">
                     {row.value(m)}
                   </td>
                 ))}

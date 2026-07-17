@@ -29,8 +29,9 @@ export default async function ManufacturersPage() {
   const { data: manufacturers, error } = await getManufacturers();
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-16">
-      <h1 className="mb-8 text-2xl font-semibold tracking-tight">Manufacturers</h1>
+    <main className="mx-auto max-w-5xl px-6 py-16">
+      <span className="marker">{manufacturers.length} builders</span>
+      <h1 className="mt-3 mb-8 font-serif text-3xl font-light tracking-tight">Manufacturers</h1>
 
       {error && (
         <p className="rounded-md border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">
@@ -39,19 +40,20 @@ export default async function ManufacturersPage() {
         </p>
       )}
 
-      {!error && manufacturers.length === 0 && (
-        <p className="text-zinc-600 dark:text-zinc-400">No manufacturers found.</p>
-      )}
+      {!error && manufacturers.length === 0 && <p className="text-ink-soft">No manufacturers found.</p>}
 
       <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {manufacturers.map((m) => (
-          <li key={m.id} className="rounded-lg border border-black/[.08] p-4 dark:border-white/[.145]">
-            <Link href={`/manufacturers/${m.slug}`} className="font-medium hover:underline">
+          <li
+            key={m.id}
+            className="rounded-lg border border-rule p-5 transition-colors hover:border-copper"
+          >
+            <Link href={`/manufacturers/${m.slug}`} className="font-serif text-lg hover:text-copper">
               {m.name}
             </Link>
-            <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft">
               {m.country ?? 'Unknown country'} ·{' '}
-              {m.product_line === 'electric_only' ? 'Electric only' : 'Mixed electric/conventional'}
+              {m.product_line === 'electric_only' ? 'Electric only' : 'Mixed'}
             </p>
           </li>
         ))}

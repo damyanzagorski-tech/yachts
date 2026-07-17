@@ -1,34 +1,122 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #0b1a2c;
+  --ink-soft: #4a5d75;
+  --paper: #faf7f0;
+  --paper-soft: #f3ede0;
+  --copper: #c46b3a;
+  --copper-soft: #d98a55;
+  --rule: rgba(11, 26, 44, 0.14);
+  --rule-strong: rgba(11, 26, 44, 0.3);
+
+  --background: var(--paper);
+  --foreground: var(--ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-paper: var(--paper);
+  --color-paper-soft: var(--paper-soft);
+  --color-copper: var(--copper);
+  --color-copper-soft: var(--copper-soft);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --font-sans: var(--font-manrope);
+  --font-serif: var(--font-fraunces);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--ink);
+    --foreground: var(--paper);
+    --ink-soft: rgba(250, 247, 240, 0.65);
+    --paper-soft: #142a44;
+    --rule: rgba(250, 247, 240, 0.14);
+    --rule-strong: rgba(250, 247, 240, 0.3);
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), "Helvetica Neue", sans-serif;
+}
+
+/* Small uppercase tracked label used as a section/category marker,
+   with a short rule before it — e.g. "MANUFACTURER", "DAY BOAT". */
+.marker {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--copper);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.marker::before {
+  content: "";
+  width: 20px;
+  height: 1px;
+  background: var(--copper);
+}
+
+/* Label/value row — uppercase tracked label on the left, large serif
+   value on the right, thin rule dividers. Used on spec sheets. */
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.spec-row:first-child {
+  border-top: 1px solid var(--rule-strong);
+}
+
+.spec-row .spec-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.spec-row .spec-value {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: 1.15rem;
+  color: var(--foreground);
+  text-align: right;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-soft);
 }
 
 .markdown-body h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-top: 2rem;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.4rem;
+  margin-top: 2.25rem;
   margin-bottom: 0.75rem;
 }
 
@@ -52,12 +140,13 @@ body {
 }
 
 .markdown-body a {
+  color: var(--copper);
   text-decoration: underline;
 }
 
 .markdown-body blockquote {
-  border-left: 3px solid currentColor;
+  border-left: 3px solid var(--copper);
   padding-left: 1rem;
-  opacity: 0.8;
+  color: var(--ink-soft);
   margin-bottom: 1rem;
 }

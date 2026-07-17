@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -31,19 +34,21 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <header className="border-b border-black/[.08] dark:border-white/[.145]">
-          <nav className="mx-auto flex max-w-4xl items-center gap-6 px-6 py-4 text-sm font-medium">
-            <Link href="/">Electric Yacht Market</Link>
-            <Link href="/manufacturers" className="text-zinc-600 hover:text-inherit dark:text-zinc-400">
+        <header className="border-b border-rule">
+          <nav className="mx-auto flex max-w-5xl items-center gap-8 px-6 py-5 text-xs font-semibold uppercase tracking-[0.18em]">
+            <Link href="/" className="font-serif text-base font-light normal-case tracking-[0.1em]">
+              Electric <em className="text-copper">Yacht</em> Market
+            </Link>
+            <Link href="/manufacturers" className="text-ink-soft transition-colors hover:text-copper">
               Manufacturers
             </Link>
-            <Link href="/models" className="text-zinc-600 hover:text-inherit dark:text-zinc-400">
+            <Link href="/models" className="text-ink-soft transition-colors hover:text-copper">
               Models
             </Link>
-            <Link href="/guides" className="text-zinc-600 hover:text-inherit dark:text-zinc-400">
+            <Link href="/guides" className="text-ink-soft transition-colors hover:text-copper">
               Guides
             </Link>
           </nav>

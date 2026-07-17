@@ -29,8 +29,9 @@ export default async function ModelsPage() {
   const { data: models, error } = await getModels();
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-16">
-      <h1 className="mb-8 text-2xl font-semibold tracking-tight">Models</h1>
+    <main className="mx-auto max-w-5xl px-6 py-16">
+      <span className="marker">{models.length} models</span>
+      <h1 className="mt-3 mb-8 font-serif text-3xl font-light tracking-tight">Models</h1>
 
       {error && (
         <p className="rounded-md border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">
@@ -39,9 +40,7 @@ export default async function ModelsPage() {
         </p>
       )}
 
-      {!error && models.length === 0 && (
-        <p className="text-zinc-600 dark:text-zinc-400">No models found.</p>
-      )}
+      {!error && models.length === 0 && <p className="text-ink-soft">No models found.</p>}
 
       {models.length > 0 && <ModelCompareList models={models} />}
     </main>

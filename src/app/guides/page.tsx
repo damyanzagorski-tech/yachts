@@ -29,22 +29,19 @@ export default async function GuidesPage() {
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-16">
-      <h1 className="mb-8 text-2xl font-semibold tracking-tight">Guides</h1>
+      <span className="marker">Editorial</span>
+      <h1 className="mt-3 mb-8 font-serif text-3xl font-light tracking-tight">Guides</h1>
 
-      {guides.length === 0 && <p className="text-zinc-600 dark:text-zinc-400">No guides published yet.</p>}
+      {guides.length === 0 && <p className="text-ink-soft">No guides published yet.</p>}
 
       <ul className="flex flex-col gap-4">
         {guides.map((guide) => (
-          <li key={guide.id} className="rounded-lg border border-black/[.08] p-4 dark:border-white/[.145]">
-            <p className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-              {CONTENT_TYPE_LABELS[guide.content_page_groups.content_type]}
-            </p>
-            <Link href={`/guides/${guide.slug}`} className="mt-1 block text-lg font-medium hover:underline">
+          <li key={guide.id} className="rounded-lg border border-rule p-5 transition-colors hover:border-copper">
+            <span className="badge">{CONTENT_TYPE_LABELS[guide.content_page_groups.content_type]}</span>
+            <Link href={`/guides/${guide.slug}`} className="mt-2 block font-serif text-lg hover:text-copper">
               {guide.title}
             </Link>
-            {guide.meta_description && (
-              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{guide.meta_description}</p>
-            )}
+            {guide.meta_description && <p className="mt-1 text-sm text-ink-soft">{guide.meta_description}</p>}
           </li>
         ))}
       </ul>

@@ -54,13 +54,18 @@ export default async function ManufacturerDetailPage({ params }: PageProps) {
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-16">
-      <Link href="/manufacturers" className="text-sm text-zinc-600 hover:underline dark:text-zinc-400">
+      <Link
+        href="/manufacturers"
+        className="block text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft hover:text-copper"
+      >
         ← All manufacturers
       </Link>
 
-      <h1 className="mt-4 text-2xl font-semibold tracking-tight">{manufacturer.name}</h1>
-      <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-        {manufacturer.country ?? 'Unknown country'} ·{' '}
+      <div className="mt-6">
+        <span className="marker">{manufacturer.country ?? 'Manufacturer'}</span>
+      </div>
+      <h1 className="mt-3 font-serif text-3xl font-light tracking-tight">{manufacturer.name}</h1>
+      <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft">
         {manufacturer.product_line === 'electric_only' ? 'Electric only' : 'Mixed electric/conventional'}
         {manufacturer.is_verified && ' · Verified'}
       </p>
@@ -70,35 +75,39 @@ export default async function ManufacturerDetailPage({ params }: PageProps) {
           href={manufacturer.website}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-2 inline-block text-sm font-medium hover:underline"
+          className="mt-4 inline-block text-sm font-semibold text-copper hover:text-copper-soft"
         >
           Visit website ↗
         </a>
       )}
 
       {manufacturer.description && (
-        <p className="mt-6 max-w-2xl text-zinc-700 dark:text-zinc-300">{manufacturer.description}</p>
+        <p className="mt-6 max-w-2xl text-ink-soft">{manufacturer.description}</p>
       )}
 
       {manufacturer.founded_year && (
-        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">Founded {manufacturer.founded_year}</p>
+        <div className="spec-row mt-6 max-w-xs">
+          <span className="spec-label">Founded</span>
+          <span className="spec-value">{manufacturer.founded_year}</span>
+        </div>
       )}
 
-      <h2 className="mt-12 mb-4 text-lg font-semibold">Models ({models.length})</h2>
+      <h2 className="mt-12 mb-4 font-serif text-xl font-light">
+        Models <span className="text-copper">({models.length})</span>
+      </h2>
 
-      {models.length === 0 && (
-        <p className="text-zinc-600 dark:text-zinc-400">No models listed for this manufacturer yet.</p>
-      )}
+      {models.length === 0 && <p className="text-ink-soft">No models listed for this manufacturer yet.</p>}
 
       <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {models.map((model) => (
-          <li key={model.id} className="rounded-lg border border-black/[.08] p-4 dark:border-white/[.145]">
-            <Link href={`/models/${model.slug}`} className="font-medium hover:underline">
+          <li key={model.id} className="rounded-lg border border-rule p-5 transition-colors hover:border-copper">
+            <Link href={`/models/${model.slug}`} className="font-serif text-lg hover:text-copper">
               {model.name}
             </Link>
-            <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-              {model.category.replace('_', ' ')} · {formatPrice(model)}
+            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft">
+              {model.category.replace('_', ' ')}
             </p>
+            <p className="mt-2 font-serif text-sm italic text-copper">{formatPrice(model)}</p>
           </li>
         ))}
       </ul>

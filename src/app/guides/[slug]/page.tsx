@@ -71,27 +71,28 @@ export default async function GuideDetailPage({ params }: PageProps) {
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-16">
-      <Link href="/guides" className="text-sm text-zinc-600 hover:underline dark:text-zinc-400">
+      <Link
+        href="/guides"
+        className="block text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft hover:text-copper"
+      >
         ← All guides
       </Link>
 
-      <p className="mt-4 text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-        {CONTENT_TYPE_LABELS[guide.content_page_groups.content_type]}
-      </p>
-      <h1 className="mt-1 text-2xl font-semibold tracking-tight">{guide.title}</h1>
-      {guide.meta_description && (
-        <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">{guide.meta_description}</p>
-      )}
+      <div className="mt-6">
+        <span className="marker">{CONTENT_TYPE_LABELS[guide.content_page_groups.content_type]}</span>
+      </div>
+      <h1 className="mt-3 font-serif text-3xl font-light tracking-tight">{guide.title}</h1>
+      {guide.meta_description && <p className="mt-4 text-lg text-ink-soft">{guide.meta_description}</p>}
 
       <div className="markdown-body mt-8" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
 
       {relatedLinks.length > 0 && (
-        <div className="mt-8 flex flex-wrap gap-3 border-t border-black/[.08] pt-6 dark:border-white/[.145]">
+        <div className="mt-8 flex flex-wrap gap-3 border-t border-rule pt-6">
           {relatedLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-full border border-black/[.08] px-4 py-2 text-sm hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
+              className="rounded-full border border-rule-strong px-4 py-2 text-sm transition-colors hover:border-copper hover:text-copper"
             >
               {link.label} →
             </Link>

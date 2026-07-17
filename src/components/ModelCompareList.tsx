@@ -33,7 +33,7 @@ export function ModelCompareList({ models }: { models: ModelWithManufacturer[] }
           return (
             <li
               key={model.id}
-              className="flex items-start gap-3 rounded-lg border border-black/[.08] p-4 dark:border-white/[.145]"
+              className="flex items-start gap-3 rounded-lg border border-rule p-5 transition-colors hover:border-copper"
             >
               <input
                 type="checkbox"
@@ -41,16 +41,16 @@ export function ModelCompareList({ models }: { models: ModelWithManufacturer[] }
                 onChange={() => toggle(model.slug)}
                 disabled={!checked && selected.length >= MAX_COMPARE}
                 aria-label={`Select ${model.name} to compare`}
-                className="mt-1"
+                className="mt-1.5 accent-copper"
               />
               <div>
-                <Link href={`/models/${model.slug}`} className="font-medium hover:underline">
+                <Link href={`/models/${model.slug}`} className="font-serif text-lg hover:text-copper">
                   {model.name}
                 </Link>
-                <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft">
                   {model.manufacturers?.name} · {model.category.replace('_', ' ')}
                 </p>
-                <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{formatPrice(model)}</p>
+                <p className="mt-2 font-serif text-sm italic text-copper">{formatPrice(model)}</p>
               </div>
             </li>
           );
@@ -58,8 +58,8 @@ export function ModelCompareList({ models }: { models: ModelWithManufacturer[] }
       </ul>
 
       {selected.length > 0 && (
-        <div className="fixed inset-x-0 bottom-0 flex items-center justify-between border-t border-black/[.08] bg-zinc-50 px-6 py-4 dark:border-white/[.145] dark:bg-black">
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+        <div className="fixed inset-x-0 bottom-0 flex items-center justify-between border-t border-rule bg-background px-6 py-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-soft">
             {selected.length} selected{selected.length >= MAX_COMPARE && ` (max ${MAX_COMPARE})`}
           </p>
           <Link
@@ -67,8 +67,8 @@ export function ModelCompareList({ models }: { models: ModelWithManufacturer[] }
             aria-disabled={selected.length < 2}
             className={
               selected.length >= 2
-                ? 'rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background hover:bg-[#383838] dark:hover:bg-[#ccc]'
-                : 'cursor-not-allowed rounded-full bg-zinc-300 px-5 py-2 text-sm font-medium text-zinc-500 dark:bg-zinc-700'
+                ? 'rounded-full bg-copper px-5 py-2 text-sm font-semibold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-copper-soft'
+                : 'cursor-not-allowed rounded-full border border-rule-strong px-5 py-2 text-sm font-semibold uppercase tracking-[0.1em] text-ink-soft'
             }
           >
             Compare {selected.length >= 2 ? `(${selected.length})` : ''}

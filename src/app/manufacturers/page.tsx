@@ -1,10 +1,14 @@
 import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { buildAlternates } from '@/lib/seo';
 import type { Manufacturer } from '@/lib/supabase/types';
 
-export const metadata = {
-  title: 'Electric Yacht Manufacturers',
-};
+export async function generateMetadata() {
+  return {
+    title: 'Electric Yacht Manufacturers',
+    alternates: await buildAlternates('/manufacturers'),
+  };
+}
 
 async function getManufacturers(): Promise<{ data: Manufacturer[]; error: string | null }> {
   try {

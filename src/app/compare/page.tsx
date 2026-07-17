@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { buildAlternates } from '@/lib/seo';
 import type { ModelWithManufacturer } from '@/lib/supabase/types';
 
 const MAX_COMPARE = 4;
@@ -47,7 +48,14 @@ const ROWS: Row[] = [
   { label: 'Charging time', value: (m) => (m.charging_time_hours ? `${m.charging_time_hours} hours` : '—') },
 ];
 
-export const metadata = { title: 'Compare Electric Yachts' };
+export async function generateMetadata({ searchParams }: PageProps) {
+  const { slugs } = await searchParams;
+  const search = slugs ? `?slugs=${slugs}` : '';
+  return {
+    title: 'Compare Electric Yachts',
+    alternates: await buildAlternates(`/compare${search}`),
+  };
+}
 
 export default async function ComparePage({ searchParams }: PageProps) {
   const { slugs: slugsParam } = await searchParams;

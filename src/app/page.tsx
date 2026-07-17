@@ -1,4 +1,9 @@
 import Link from 'next/link';
+import { buildAlternates } from '@/lib/seo';
+
+export async function generateMetadata() {
+  return { alternates: await buildAlternates('/') };
+}
 
 export default function Home() {
   return (

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { buildAlternates } from '@/lib/seo';
 import type { ModelPowertrain, ModelWithManufacturer } from '@/lib/supabase/types';
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -52,7 +53,10 @@ function Spec({ label, value }: { label: string; value: string | number | null |
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const model = await getModel(slug);
-  return { title: model ? `${model.name} — Electric Yachts` : 'Model' };
+  return {
+    title: model ? `${model.name} — Electric Yachts` : 'Model',
+    alternates: await buildAlternates(`/models/${slug}`),
+  };
 }
 
 export default async function ModelDetailPage({ params }: PageProps) {

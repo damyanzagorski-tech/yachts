@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { buildAlternates } from '@/lib/seo';
 import type { Manufacturer, ModelWithManufacturer } from '@/lib/supabase/types';
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -38,7 +39,10 @@ function formatPrice(model: ModelWithManufacturer): string {
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const manufacturer = await getManufacturer(slug);
-  return { title: manufacturer ? `${manufacturer.name} — Electric Yachts` : 'Manufacturer' };
+  return {
+    title: manufacturer ? `${manufacturer.name} — Electric Yachts` : 'Manufacturer',
+    alternates: await buildAlternates(`/manufacturers/${slug}`),
+  };
 }
 
 export default async function ManufacturerDetailPage({ params }: PageProps) {

@@ -1,10 +1,14 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { ModelCompareList } from '@/components/ModelCompareList';
+import { buildAlternates } from '@/lib/seo';
 import type { ModelWithManufacturer } from '@/lib/supabase/types';
 
-export const metadata = {
-  title: 'Electric Yacht Models',
-};
+export async function generateMetadata() {
+  return {
+    title: 'Electric Yacht Models',
+    alternates: await buildAlternates('/models'),
+  };
+}
 
 async function getModels(): Promise<{ data: ModelWithManufacturer[]; error: string | null }> {
   try {

@@ -831,11 +831,11 @@ on conflict (slug) do nothing;
 -- Nimbus 305 Coupe E-Power — combustion design adapted to electric
 insert into models (
     manufacturer_id, name, slug, category, propulsion_type,
-    length_m, motor_power_kw, battery_kwh, cruise_speed_knots, range_nm,
+    length_m, motor_power_kw, battery_kwh, range_nm,
     price_from_eur, description
 )
 select id, '305 Coupe E-Power', 'nimbus-305-coupe-e-power', 'cruiser', 'electric',
-    10.07, 50, 42.2, 5.7, 53,
+    10.07, 50, 42.2, 53,
     265000,
     'Per Nimbus''s own official spec (electric boating since 2009, this configuration offered since 2015): Torqeedo Deep Blue 50i 1400rpm drive with a single 42.2kWh BMW i3 battery, chargeable in 16 hours at 230V or 8 hours at 380V. Optional upgrade to a dual 2x42.2kWh (84.4kWh total) fast-charging pack. At 5.7-knot cruise, range is 53nm; dropping to 3.7 knots extends range to 86nm. Built on Nimbus''s "Smart Speed" hull (comfortable from 0-22 knots), built to order.'
 from manufacturers where slug = 'nimbus-boats'
@@ -844,11 +844,11 @@ on conflict (slug) do nothing;
 -- Nimbus 305 Drophead E-Power — sister model on the same electric platform
 insert into models (
     manufacturer_id, name, slug, category, propulsion_type,
-    length_m, motor_power_kw, battery_kwh, cruise_speed_knots, range_nm,
+    length_m, motor_power_kw, battery_kwh, range_nm,
     price_from_eur, description
 )
 select id, '305 Drophead E-Power', 'nimbus-305-drophead-e-power', 'day_boat', 'electric',
-    10.07, 50, 42.2, 5.7, 53,
+    10.07, 50, 42.2, 53,
     255000,
     'Day-cruiser sibling to the 305 Coupe E-Power, sharing the same Smart Speed hull and Torqeedo Deep Blue 50i / BMW i3 42.2kWh electric powertrain (optional dual-pack 84.4kWh upgrade also available). Built to order.'
 from manufacturers where slug = 'nimbus-boats'
@@ -1054,11 +1054,11 @@ on conflict (slug) do nothing;
 -- Source: pbo.co.uk, vita-power.com, plugboats.com
 insert into models (
     manufacturer_id, name, slug, category, propulsion_type,
-    length_m, motor_power_kw, battery_kwh, top_speed_knots, cruise_speed_knots,
+    length_m, motor_power_kw, battery_kwh, top_speed_knots,
     price_from_eur, description
 )
 select id, 'Seal', 'vita-power-seal', 'tender', 'electric',
-    7.2, 95, 126, 30, 20,
+    7.2, 95, 126, 30,
     157000,
     'Vita''s first RIB designed and engineered from the ground up around its own electric powertrain (launched 2021), rather than a converted combustion hull. Aluminium hull, built in Serbia. 95kW continuous / 140kW peak motor, available with single (63kWh) or dual (126kWh) battery pack. DC supercharge 10-90% in under an hour. Sold to San Diego Yacht Club, City of Newport Beach, and used at the Paris 2024 Olympics. Price converted from a starting point of ~£135,000 (GBP); this figure is shared/approximate across Seal and SeaDog per the source.'
 from manufacturers where slug = 'vita-power'
@@ -1083,11 +1083,11 @@ on conflict (slug) do nothing;
 -- Source: robbreport.com, vita-power.com
 insert into models (
     manufacturer_id, name, slug, category, propulsion_type,
-    length_m, motor_power_kw, battery_kwh, top_speed_knots, cruise_speed_knots,
+    length_m, motor_power_kw, battery_kwh, top_speed_knots,
     price_from_eur, description
 )
 select id, 'Lion', 'vita-power-lion', 'day_boat', 'electric',
-    10.67, 300, 235, 35, 22,
+    10.67, 300, 235, 35,
     900000,
     'Vita''s first premium production electric day boat, first built at Hodgdon''s Maine shipyard (the same yard that builds the carbon hull for the Maserati Tridente). Per MBY (2023): twin 150kW motors (300kW combined) driving a single Mercury Bravo sterndrive, 235kWh battery, top speed ~35 knots, cruising 90 minutes at 22 knots or ~10 hours at 6-7 knots. Believed to share its core platform with the Maserati Tridente collaboration (same ~10.5m length, similar cruise/top speed). Price converted from a £750,000 (ex VAT) starting price. DATA CONFLICT: a separate Robb Report source instead cites 590hp (~440kW) and a $1.5m base price — see the powertrain table note for detail; confirm current spec/pricing with Vita Power before publishing.'
 from manufacturers where slug = 'vita-power'
@@ -1098,12 +1098,12 @@ on conflict (slug) do nothing;
 insert into models (
     manufacturer_id, name, slug, category, propulsion_type,
     length_m, beam_m,
-    motor_power_kw, battery_kwh, top_speed_knots, cruise_speed_knots, range_nm,
+    motor_power_kw, battery_kwh, top_speed_knots, range_nm,
     description
 )
 select id, 'THE ICON', 'tyde-the-icon', 'other', 'electric',
     13.16, 4.5,
-    200, 240, 30, 24, 50,
+    200, 240, 30, 50,
     'Collaboration between BMW and German foiling startup TYDE — a reverse-bow, glass-hulled foiling trimaran aimed at B2B luxury ferry/shuttle use (resort transfers, airport-to-harbour) rather than private ownership. Lifts onto its hydrofoils at 18 knots. Twin 100kW Torqeedo motors, six BMW i3-derived battery modules totalling 240kWh. Interior styled by BMW with a 32-inch touchscreen (BMW Operating System 8) and a Hans Zimmer-composed onboard soundscape. Category set to ''other'' rather than a standard day-boat/tender type given its unconventional foiling-ferry design and B2B commercial positioning.'
 from manufacturers where slug = 'tyde'
 on conflict (slug) do nothing;
@@ -1135,12 +1135,12 @@ on conflict (slug) do nothing;
 insert into models (
     manufacturer_id, name, slug, category, propulsion_type,
     length_m, beam_m, passenger_capacity,
-    motor_power_kw, battery_kwh, top_speed_knots, cruise_speed_knots, range_nm,
+    motor_power_kw, battery_kwh, top_speed_knots, range_nm,
     description
 )
 select id, 'Scout 215 Dorado', 'flux-marine-scout-215-dorado', 'day_boat', 'electric',
     6.55, 2.57, 9,
-    112, 84, 27.8, 21.7, 26,
+    112, 84, 27.8, 26,
     'Dual-console bowrider on a Scout Boats 215 hull (Scout is a conventional South Carolina/North Carolina builder), fitted with the Flux Marine 100 electric outboard (150hp peak). Fiberglass hull, Permateak deck. Part of a wider Flux/Scout partnership that also includes the Scout 215 XSF center console sport-fishing variant on the same electric platform.'
 from manufacturers where slug = 'flux-marine'
 on conflict (slug) do nothing;
@@ -1190,12 +1190,12 @@ on conflict (slug) do nothing;
 insert into models (
     manufacturer_id, name, slug, category, propulsion_type,
     length_m, beam_m, passenger_capacity,
-    battery_kwh, top_speed_knots, cruise_speed_knots, range_nm,
+    battery_kwh, top_speed_knots, range_nm,
     price_from_eur, description
 )
 select id, 'Amber', 'elvene-amber', 'day_boat', 'electric',
     6.2, 2.1, 7,
-    22, 15, 9.5, 100,
+    22, 15, 100,
     90000,
     'Solar-electric flagship combining center-console offshore capability with day-cruiser overnight comfort (2-person cuddy cabin). Integrated walkable solar panels (1,300-2,000W). Twin BLDC outboard motors (48V), fiberglass hull, ~750kg. In full sunlight, range at 5 knots is effectively unlimited (zero net battery draw); on battery alone in darkness, ~100nm at 5 knots. Price from €90,000 ex. EU VAT.'
 from manufacturers where slug = 'elvene'
@@ -1204,11 +1204,11 @@ on conflict (slug) do nothing;
 -- Elvene Amy — faster solar-electric model (2026 debut)
 insert into models (
     manufacturer_id, name, slug, category, propulsion_type,
-    motor_power_kw, top_speed_knots, cruise_speed_knots, range_nm,
+    motor_power_kw, top_speed_knots, range_nm,
     description
 )
 select id, 'Amy', 'elvene-amy', 'day_boat', 'electric',
-    50, 30, 20, 35,
+    50, 30, 35,
     'Higher-performance sibling to the Amber, debuting at Nice Boating Tomorrow 2026. Marketed as one of the fastest solar-electric production boats. 50kW ARIES outboard drive from German propulsion partner Molabo (48V, "safe-to-touch" system). Range figures apply at 20-knot cruise; low-speed operation extends range further via solar assist.'
 from manufacturers where slug = 'elvene'
 on conflict (slug) do nothing;
@@ -1469,12 +1469,12 @@ on conflict (slug) do nothing;
 insert into models (
     manufacturer_id, name, slug, category, propulsion_type,
     length_m, beam_m,
-    motor_power_kw, battery_kwh, cruise_speed_knots, range_nm,
+    motor_power_kw, battery_kwh, range_nm,
     description
 )
 select id, '10m Day Cruiser', 'ripple-boats-10m-day-cruiser', 'day_boat', 'electric',
     10.0, 3.2,
-    186, 190, 25, 45,
+    186, 190, 45,
     'Debut model from Norwegian start-up Ripple Boats (Frydenbø Marine + Pascal Technologies), designed by Thorup Design. Extendable hard-top bimini with inset glazing, folding balconies. Twin 93kW motors, 190kWh battery. Company plans a wider 6-11m electric range if this model succeeds. Price not disclosed as of the 2023 source.'
 from manufacturers where slug = 'ripple-boats'
 on conflict (slug) do nothing;
@@ -1610,11 +1610,11 @@ on conflict (slug) do nothing;
 -- ElectraCraft TR range (152 and siblings) — mini-trimaran electric cruisers
 insert into models (
     manufacturer_id, name, slug, category, propulsion_type,
-    length_m, top_speed_knots, cruise_speed_knots,
+    length_m, top_speed_knots,
     description
 )
 select id, 'TR 152', 'electracraft-tr-152', 'day_boat', 'electric',
-    4.57, 5.2, 3.5,
+    4.57, 5.2,
     'One of three sizes (15-18ft) in ElectraCraft''s mini-trimaran TR range, designed for electric-only waterways. Full canvas or fiberglass hard top, solar-panel compatible, center-facing seating from bow to stern. Inboard electric motor with V-drive. Top speed ~6mph (~5.2kn), cruise ~4mph (~3.5kn), ~3.5 hours runtime at full speed. ElectraCraft also offers a more traditional-looking 15-18ft lapstrake V-hull electric range alongside the TR trimarans.'
 from manufacturers where slug = 'electracraft'
 on conflict (slug) do nothing;
@@ -1760,6 +1760,10 @@ select id, 'Evo 700', 'marian-evo-700', 'sport', 'electric',
     'Dedicated electric wakesurf boat, described by the manufacturer as more than a wakesurf boat — "the electric evolution" of the category. Detailed motor/battery specs not disclosed on the listing.'
 from manufacturers where slug = 'marian-boats'
 on conflict (slug) do nothing;
+
+-- Marian Capriole 700
+insert into models (
+    manufacturer_id, name, slug, category, propulsion_type,
     length_m, beam_m, motor_power_kw, battery_kwh, top_speed_knots,
     price_from_eur, description
 )
@@ -1832,11 +1836,11 @@ on conflict (slug) do nothing;
 -- Earthling E-40 Power Catamaran
 insert into models (
     manufacturer_id, name, slug, category, propulsion_type,
-    length_m, beam_m, motor_power_kw, cruise_speed_knots,
+    length_m, beam_m, motor_power_kw,
     price_from_eur, description
 )
 select id, 'E-40 Power Catamaran', 'earthling-e40-power-catamaran', 'catamaran', 'electric',
-    12.0, 5.5, 100, 11,
+    12.0, 5.5, 100,
     495000,
     'Draft 0.75m. Twin 50kW electric drives (100kW combined), ~3.5-3.6 tonnes, cruising at 10-12 knots. 2kW solar array (also used for water heating). Compact DC generators available as a hybrid range-extending backup. Completed a long-range delivery voyage from New Zealand to Barcelona under electric/hybrid power.'
 from manufacturers where slug = 'earthling'
@@ -1911,11 +1915,11 @@ on conflict (slug) do nothing;
 -- LUMEN E10 — Dutch fast-displacement-hull electric yacht
 insert into models (
     manufacturer_id, name, slug, category, propulsion_type,
-    length_m, beam_m, top_speed_knots, cruise_speed_knots, range_nm,
+    length_m, beam_m, top_speed_knots, range_nm,
     description
 )
 select id, 'E10', 'lumen-e10', 'day_boat', 'electric',
-    10.0, 3.0, 18.9, 6.5,
+    10.0, 3.0, 18.9,
     86,
     'Fast-displacement hull (combining full and semi-displacement characteristics) by Jaap de Jonge, exterior/interior design by Mulder Design, built by JR Yachts in Drachten, Netherlands. ~2,800kg. Range 100-160km (~54-86nm) at 10-13km/h (~5.4-7kn) cruise; max speed 30-35km/h (~16-19kn). Trailerable for use across different countries/lakes. Motor/battery brand and capacity not disclosed on the manufacturer''s public spec page.'
 from manufacturers where slug = 'lumen-yachts'
@@ -2025,7 +2029,7 @@ values
      'In-house Arc-designed motor/battery. Motor rated 500-570hp (~373-425kW) depending on source; battery 225-226kWh. Wave-shaping ballast/tab system for wakeboarding and surfing.'),
 
     ((select id from models where slug = 'alva-ocean-eco-60'), 'electric', true,
-     null, null, null, null, null, null, null, null, 20, null, null, null, 2800000,
+     null, null, 1, null, null, null, null, null, 20, null, null, null, 2800000,
      'Motor/battery specs not disclosed in sources checked; solar array up to 20kW peak across ~80 sqm of panels, with hybrid generator backup for extended range.'),
 
     ((select id from models where slug = 'alfastreet-28-cabin-electric'), 'electric', true,
@@ -2149,7 +2153,7 @@ values
      '48V direct-drive system, each 25kW motor pod rotates 90° for joystick maneuvering (Optimus 360 system).'),
 
     ((select id from models where slug = 'novaluxe-orphie-39'), 'electric', true,
-     null, null, null, null, null, null, null, null, null, null, null, null, null,
+     null, null, 1, null, null, null, null, null, null, null, null, null, null,
      'Motor and battery specs not independently confirmed in this research pass — solar-integrated trimaran, treat as incomplete pending direct manufacturer confirmation.'),
 
     ((select id from models where slug = 'vision-marine-v24'), 'electric', true,
@@ -2161,7 +2165,7 @@ values
      'Same dual battery-pack range options as V24 (43kWh/86kWh); optional pack priced separately from the base $139,995.'),
 
     ((select id from models where slug = 'vision-marine-phantom'), 'electric', true,
-     null, null, null, null, null, null, null, null, null, null, null, null, null,
+     null, null, 1, null, null, null, null, null, null, null, null, null, null,
      'Rotomolded plastic construction; motor/battery specs need direct confirmation from Vision Marine before publishing.'),
 
     ((select id from models where slug = 'cosmopolitan-yachts-66'), 'electric', true,
@@ -2221,7 +2225,7 @@ values
      'Under 2 tonnes all-up; held the fastest-production-electric-boat-under-9m record as of 2018. Built-in 22kW charger.'),
 
     ((select id from models where slug = 'spirit-yachts-bartech-35ef'), 'electric', true,
-     null, null, null, null, null, null, null, null, 28, 20, 100, 20, null,
+     null, null, 1, null, null, null, null, null, 28, 20, 100, 20, null,
      'One-off commission; motor/battery details and pricing not disclosed (available on application only).'),
 
     ((select id from models where slug = 'voltari-260'), 'electric', true,

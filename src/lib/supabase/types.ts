@@ -2,6 +2,8 @@
 // Keep in sync with the schema file — regenerate manually when it changes
 // (or swap for `supabase gen types typescript` once the project is live).
 
+import type { ContentPage, ContentPageGroup } from './content';
+
 export type ManufacturerStatus = 'prospect' | 'contacted' | 'partner' | 'active' | 'inactive';
 export type ManufacturerProductLine = 'electric_only' | 'mixed_electric_conventional';
 export type BoatCategory = 'day_boat' | 'cruiser' | 'catamaran' | 'tender' | 'sport' | 'limousine' | 'other';
@@ -103,6 +105,16 @@ export type Database = {
         Row: ModelPowertrain;
         Insert: Partial<ModelPowertrain>;
         Update: Partial<ModelPowertrain>;
+      };
+      content_page_groups: {
+        Row: ContentPageGroup;
+        Insert: Partial<ContentPageGroup>;
+        Update: Partial<ContentPageGroup>;
+      };
+      content_pages: {
+        Row: ContentPage;
+        Insert: Partial<ContentPage>;
+        Update: Partial<ContentPage>;
       };
     };
   };

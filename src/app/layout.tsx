@@ -38,6 +38,9 @@ export default function RootLayout({
             <Link href="/models" className="text-zinc-600 hover:text-inherit dark:text-zinc-400">
               Models
             </Link>
+            <Link href="/guides" className="text-zinc-600 hover:text-inherit dark:text-zinc-400">
+              Guides
+            </Link>
           </nav>
         </header>
         <div className="flex flex-1 flex-col">{children}</div>

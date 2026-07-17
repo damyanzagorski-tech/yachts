@@ -2245,6 +2245,134 @@ values
      'Twin 298kW motors, 596kW/800hp combined. DC fast-charge to 80% in 45 minutes.');
 
 -- =====================================================================
+-- SEED DATA — Initial English content_pages (primary domain template)
+-- =====================================================================
+-- Small starter set: one pillar/overview page, one buyer's guide, and one
+-- featured-partner page for Crooze Yachts (the only manufacturer with a
+-- live commission agreement as of this writing). Rendered at /guides/[slug].
+
+insert into content_page_groups (group_key, content_type, country, related_manufacturer_id, related_model_id)
+values
+    ('electric-yachts-europe-overview', 'landing_page', null, null, null),
+    ('electric-yacht-buyers-guide', 'buyer_guide', null, null, null),
+    ('crooze-yachts-ez28-feature', 'model_page', null,
+        (select id from manufacturers where slug = 'crooze-yachts'),
+        (select id from models where slug = 'crooze-yachts-ez28'))
+on conflict (group_key) do nothing;
+
+insert into content_pages (page_group_id, title, slug, url_path, language, primary_keyword, meta_description, body_markdown, status, published_at)
+values
+    ((select id from content_page_groups where group_key = 'electric-yachts-europe-overview'),
+     'Electric Yachts in Europe: The Complete Overview',
+     'electric-yachts-europe-overview',
+     '/guides/electric-yachts-europe-overview',
+     'en',
+     'electric yachts',
+     'A guide to the electric and hybrid-electric yacht market in Europe — what''s available, how the boats compare, and what to consider before buying.',
+$md$## What is an electric yacht?
+
+An electric yacht replaces the diesel or petrol engine found on a conventional boat with an electric motor powered by an onboard battery pack, charged from shore power like an electric car. A smaller number of "hybrid-electric" models pair a combustion engine or generator with an electric drivetrain, offering silent, zero-emission running at low speed with a combustion range-extender for longer trips.
+
+## Why interest is growing
+
+A mix of factors is pushing electric propulsion onto the water: tightening emissions rules in some European harbours and lakes, a growing number of electric-only marinas and no-wake zones, and the simple appeal of a boat that runs near-silently with no exhaust fumes. Charging infrastructure at marinas is still catching up to demand, which is one of the biggest practical considerations for a first-time buyer — see our [buyer's guide](/guides/electric-yacht-buyers-guide).
+
+## Who's building them
+
+The market splits into two groups. **Electric-only builders** — companies like Candela, ARC Boats, X Shore, and Vita Power — were founded specifically around electric propulsion and design their hulls, hydrofoils, and battery systems around it from the start. **Mixed manufacturers** — established combustion-boat builders such as Frauscher, Sunreef, Riva, and Axopar — have added one or more electric models to an otherwise conventional range, often as a flagship or halo model rather than their volume product.
+
+## What's available
+
+Electric yachts on the market today span day boats and tenders (the largest category, generally under 10m), sport boats and RIBs built for performance, larger cruisers and catamarans with liveaboard accommodation, and a small number of ultra-luxury flagship models. Prices range from roughly €90,000 for an entry-level day boat to several million euros for the largest catamarans and cruisers.
+
+## Range and charging, realistically
+
+Electric range is the single biggest difference from a combustion boat, and it varies enormously with speed: most electric yachts get dramatically more range at a gentle cruising speed (often 5-8 knots) than at top speed, sometimes by a factor of 3-4x. When comparing models, look at the range figure's stated speed, not just the headline number.
+
+## Explore the data
+
+This site tracks the manufacturers and models in this market with verified specifications. Browse [all manufacturers](/manufacturers), [all models](/models), or use the [comparison tool](/compare) to put two or more boats side by side.
+$md$,
+     'published', now()),
+
+    ((select id from content_page_groups where group_key = 'electric-yacht-buyers-guide'),
+     'How to Buy an Electric Yacht: A Buyer''s Guide',
+     'electric-yacht-buyers-guide',
+     '/guides/electric-yacht-buyers-guide',
+     'en',
+     'how to buy an electric yacht',
+     'What actually matters when buying an electric yacht — range and battery, charging, motor power, hull type, and how to verify a manufacturer''s claims.',
+$md$## Start with how you'll actually use the boat
+
+Range, motor power, and passenger capacity all depend on the answer to one question: what are you actually going to do with the boat? A boat used for short trips around a marina or lake has very different requirements from one intended for longer coastal cruising. Day boats and tenders suit the former; cruisers and catamarans the latter.
+
+## Range and battery capacity
+
+Battery capacity (measured in kWh) is only half the story — the other half is speed. Nearly every electric yacht's real-world range is quoted at a specific cruising speed, and that range drops sharply as you go faster. A boat advertised with "50nm range" might mean 50nm at a gentle 6 knots, and far less at its 25-knot top speed. Always check the speed a range figure is quoted at, and if a manufacturer doesn't state one, ask.
+
+## Charging
+
+Most electric yachts charge from standard shore power (AC), typically taking anywhere from a few hours to overnight for a full charge, depending on battery size and the charger's power rating. A smaller number of models support DC fast charging, which can bring a battery from low to mostly full in under an hour — useful if you're planning multiple outings in a day. Marina charging infrastructure varies a lot by country and even by marina, so it's worth confirming what's actually available where you plan to keep the boat before assuming a fast-charge model will let you charge quickly in practice.
+
+## Motor power and performance
+
+Motor power (kW) determines top speed and acceleration, not range — a more powerful motor drains the battery faster at a given speed, but doesn't by itself extend how far you can go. Some models are sold with a choice of motor and battery configurations on the same hull; if that's the case, make sure the spec sheet you're comparing is for the exact configuration you're pricing.
+
+## Hull type and category
+
+Day boats and tenders are the most common and affordable electric category, typically under 10m with modest range needs. Sport boats and hydrofoiling designs trade some passenger space for speed and efficiency. Cruisers and catamarans offer overnight accommodation but come with a much higher price tag and, in most cases, shorter relative range than their combustion equivalents of the same size.
+
+## CE category and regulatory notes
+
+European recreational boats carry a CE category (A, B, C, or D) reflecting the sea conditions they're certified for. This is independent of propulsion type, but worth confirming for any boat you're considering, especially if you plan to use it somewhere with open-water conditions.
+
+## Verifying manufacturer claims
+
+Specifications published by different sources (a manufacturer's own site, boat show coverage, marine press) don't always agree, particularly on battery capacity, motor power, and price. It's normal — and worth doing — to confirm the current-year spec and price directly with the manufacturer or a dealer before making a decision, since the numbers on any single web page (including this one) can be out of date.
+
+## Compare before you decide
+
+Once you've narrowed down a use case and budget, the fastest way to see how boats stack up is side by side. Use the [comparison tool](/compare) to compare specs across [any two or more models](/models) in the database.
+$md$,
+     'published', now()),
+
+    ((select id from content_page_groups where group_key = 'crooze-yachts-ez28-feature'),
+     'Crooze Yachts EZ28: Featured Electric Day Boat',
+     'crooze-yachts-ez28-feature',
+     '/guides/crooze-yachts-ez28-feature',
+     'en',
+     'Crooze Yachts EZ28',
+     'A closer look at the Crooze Yachts EZ28, an all-electric day boat built around six customizable use scenarios, from Bulgarian manufacturer Crooze Yachts.',
+$md$> **Featured partner:** Crooze Yachts is a commission partner of this site. That doesn't change what's reported below — every specification here comes from Crooze Yachts' own published data, the same as any other model in our database.
+
+## A day boat built around how you'll actually use it
+
+The EZ28 is Crooze Yachts' flagship all-electric day boat, designed around six distinct use scenarios that reconfigure the same 8.67m hull: Commuting, Fishing, Water sports, Party, Picnic, and Beach. Rather than a single fixed layout, the boat is built to be reconfigured for whichever of those the owner needs on a given day.
+
+## Power and range
+
+The EZ28 ships with a 207kW motor as standard, with an optional upgrade to 270kW for owners who want more performance. Crooze Yachts quotes a range of roughly 120 nautical miles at a 5-knot cruising speed — as with any electric boat, expect meaningfully less range at higher speeds. Battery capacity has not been disclosed in Crooze Yachts' public specifications as of our last check; we'll update this page once that's confirmed.
+
+## Comfort and layout
+
+At 8.67m with capacity for 12 passengers, the EZ28 is fitted with a WC, wet bar and grill, a stern shower, an enlarged beach area, and folding top-sides that open up 17 square metres of usable floor space — features aimed squarely at day-long use rather than short outings.
+
+## Where it sits in the market
+
+In its size class, the EZ28 competes with boats like the Frauscher x Porsche 850 Fantom Air, ARC Boats' range, Axopar's electric model, and Marian Boats — its combination of six reconfigurable use scenarios and beach-focused layout is its main point of difference from that group.
+
+## Recognition
+
+The EZ28 was a finalist at the 2025 Gussies Electric Boat Awards.
+
+## See the full spec sheet
+
+For the complete verified specification, see the [EZ28 model page](/models/crooze-yachts-ez28), or browse [all Crooze Yachts models](/manufacturers/crooze-yachts).
+$md$,
+     'published', now())
+on conflict (page_group_id, language) do nothing;
+
+-- =====================================================================
 -- Notes
 -- =====================================================================
 -- 1. This covers only the 5 "start now" tables recommended in the strategy

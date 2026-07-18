@@ -7,7 +7,7 @@ export async function generateMetadata() {
 
 export default function Home() {
   return (
-    <main className="flex flex-1 items-center bg-background">
+    <main className="hero-depth -mt-16 flex flex-1 items-center pt-16">
       <div className="mx-auto grid w-full max-w-6xl gap-12 px-6 py-24 sm:px-10 md:grid-cols-[1.5fr_1fr] md:items-end md:gap-20">
         <div>
           <span className="marker">The database</span>

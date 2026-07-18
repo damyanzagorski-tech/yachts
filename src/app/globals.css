@@ -45,6 +45,22 @@ body {
   font-family: var(--font-sans), "Helvetica Neue", sans-serif;
 }
 
+/* Above-the-fold hero depth: starts at the flat --ink base (so it lines
+   up seamlessly with the nav above, which has no background/border of
+   its own), rises to a narrow lighter highlight band near the top, then
+   deepens past --ink into near-black at the bottom — the same vertical
+   shadow the reference lays over its hero photo, applied straight to
+   our navy instead. */
+.hero-depth {
+  background: linear-gradient(
+    to bottom,
+    var(--ink) 0%,
+    var(--ink-2) 15%,
+    var(--ink) 45%,
+    #050b14 100%
+  );
+}
+
 /* Small uppercase tracked label used as a section/category marker,
    with a short rule before it — e.g. "MANUFACTURER", "DAY BOAT". */
 .marker {

@@ -37,7 +37,7 @@ export default function RootLayout({
       className={`${fraunces.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <header className="border-b border-rule">
+        <header className="relative z-10">
           <nav className="mx-auto flex max-w-5xl items-center gap-8 px-6 py-5 text-xs font-semibold uppercase tracking-[0.18em]">
             <Link href="/" className="font-serif text-base font-light normal-case tracking-[0.1em]">
               Electric <em className="text-copper">Yacht</em> Market

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
@@ -292,16 +293,29 @@ export default async function Home() {
             <ul className="reveal-stagger mt-14 grid gap-px border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
               {featuredModels.map((model) => (
                 <li key={model.id} className="bg-ink transition-colors hover:bg-ink-2">
-                  <Link href={`/models/${model.slug}`} className="block p-8">
-                    <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-copper-soft">
-                      {model.is_featured ? 'Featured' : model.manufacturers?.name}
+                  <Link href={`/models/${model.slug}`} className="block">
+                    {model.hero_image_url && (
+                      <div className="relative aspect-[16/9] overflow-hidden">
+                        <Image
+                          src={model.hero_image_url}
+                          alt={`${model.manufacturers?.name} ${model.name}`}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+                    <div className="p-8">
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-copper-soft">
+                        {model.is_featured ? 'Featured' : model.manufacturers?.name}
+                      </div>
+                      <h4 className="mt-3 font-serif text-2xl font-light">{model.name}</h4>
+                      <p className="mt-3 text-sm text-paper/55">
+                        {model.is_featured && `${model.manufacturers?.name} · `}
+                        {model.category.replace('_', ' ')}
+                      </p>
+                      <p className="mt-4 font-serif text-sm italic text-copper-soft">{formatPrice(model)}</p>
                     </div>
-                    <h4 className="mt-3 font-serif text-2xl font-light">{model.name}</h4>
-                    <p className="mt-3 text-sm text-paper/55">
-                      {model.is_featured && `${model.manufacturers?.name} · `}
-                      {model.category.replace('_', ' ')}
-                    </p>
-                    <p className="mt-4 font-serif text-sm italic text-copper-soft">{formatPrice(model)}</p>
                   </Link>
                 </li>
               ))}

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { buildAlternates } from '@/lib/seo';
+import { ModelGallery } from '@/components/ModelGallery';
 import type { ModelPowertrain, ModelWithManufacturer } from '@/lib/supabase/types';
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -65,6 +66,11 @@ export default async function ModelDetailPage({ params }: PageProps) {
   if (!model) notFound();
 
   const powertrains = await getPowertrains(model.id);
+  // Hero image leads, followed by the rest of the gallery (de-duped in
+  // case the hero is also listed in gallery_urls).
+  const galleryImages = [
+    ...new Set([...(model.hero_image_url ? [model.hero_image_url] : []), ...(model.gallery_urls ?? [])]),
+  ];
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-16">
@@ -93,6 +99,12 @@ export default async function ModelDetailPage({ params }: PageProps) {
         </div>
 
         <div>
+          {galleryImages.length > 0 && (
+            <div className="mb-10">
+              <ModelGallery images={galleryImages} alt={`${model.manufacturers.name} ${model.name}`} />
+            </div>
+          )}
+
           <h2 className="mb-2 font-serif text-xl font-light">Specifications</h2>
           <dl>
             <Spec label="Length" value={model.length_m ? `${model.length_m} m` : null} />

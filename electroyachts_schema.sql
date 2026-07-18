@@ -2554,3 +2554,22 @@ where models.slug = v.slug;
 -- (see CLAUDE.md) — flagged featured so it surfaces on the homepage.
 
 update models set is_featured = true where slug = 'crooze-yachts-ez28';
+
+-- =====================================================================
+-- SEED DATA — EZ28 imagery
+-- =====================================================================
+-- Official Crooze Yachts renders, stored in the Next.js app's
+-- public/images/ez28/ folder (paths are app-relative, served by the
+-- same deployment on every domain). Gallery = the five hull colour
+-- variants; hero = the white variant.
+
+update models set
+    hero_image_url = '/images/ez28/EZ_28_white.jpg',
+    gallery_urls = array[
+        '/images/ez28/EZ_28_white.jpg',
+        '/images/ez28/EZ_28_green.jpg',
+        '/images/ez28/EZ_28_blue.jpg',
+        '/images/ez28/EZ_28_gray.jpg',
+        '/images/ez28/EZ_28_black.jpg'
+    ]
+where slug = 'crooze-yachts-ez28';

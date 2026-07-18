@@ -7,6 +7,16 @@ import type { ContentPage, ContentPageGroup } from './content';
 export type ManufacturerStatus = 'prospect' | 'contacted' | 'partner' | 'active' | 'inactive';
 export type ManufacturerProductLine = 'electric_only' | 'mixed_electric_conventional';
 export type BoatCategory = 'day_boat' | 'cruiser' | 'catamaran' | 'tender' | 'sport' | 'limousine' | 'other';
+
+export const CATEGORY_LABELS: Record<BoatCategory, string> = {
+  day_boat: 'Day Boats',
+  cruiser: 'Cruisers',
+  catamaran: 'Catamarans',
+  tender: 'Tenders',
+  sport: 'Sport Boats',
+  limousine: 'Limousines',
+  other: 'Other',
+};
 export type PropulsionType = 'electric' | 'hybrid_electric' | 'conventional';
 export type MarketTier = 'entry' | 'premium' | 'luxury' | 'ultra_luxury';
 

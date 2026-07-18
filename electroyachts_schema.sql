@@ -2546,3 +2546,11 @@ from (values
     ('zen-yachts-zenriver',               'premium'::market_tier)
 ) as v(slug, tier)
 where models.slug = v.slug;
+
+-- =====================================================================
+-- SEED DATA — Featured flag
+-- =====================================================================
+-- Crooze Yachts EZ28 is the only model with a live commission agreement
+-- (see CLAUDE.md) — flagged featured so it surfaces on the homepage.
+
+update models set is_featured = true where slug = 'crooze-yachts-ez28';

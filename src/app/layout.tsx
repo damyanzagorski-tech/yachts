@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Fraunces, Manrope } from "next/font/google";
+import { SiteNav } from "@/components/SiteNav";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -37,23 +37,23 @@ export default function RootLayout({
       className={`${fraunces.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <header className="relative z-10">
-          <nav className="mx-auto flex max-w-5xl items-center gap-8 px-6 py-5 text-xs font-semibold uppercase tracking-[0.18em]">
-            <Link href="/" className="font-serif text-base font-light normal-case tracking-[0.1em]">
-              Electric <em className="text-copper">Yacht</em> Market
-            </Link>
-            <Link href="/manufacturers" className="text-muted transition-colors hover:text-copper">
-              Manufacturers
-            </Link>
-            <Link href="/models" className="text-muted transition-colors hover:text-copper">
-              Models
-            </Link>
-            <Link href="/guides" className="text-muted transition-colors hover:text-copper">
-              Guides
-            </Link>
-          </nav>
-        </header>
-        <div className="flex flex-1 flex-col">{children}</div>
+        <SiteNav />
+        <div className="flex flex-1 flex-col pt-16">{children}</div>
+        <footer className="border-t border-white/[.06] bg-ink px-6 py-14 text-paper">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-8">
+            <div>
+              <div className="font-serif text-xl font-light uppercase tracking-[0.28em]">
+                Electric <em className="text-copper-soft">Yacht</em> Market
+              </div>
+              <div className="mt-3 text-[11px] uppercase tracking-[0.18em] text-paper/40">
+                The database of electric &amp; hybrid-electric yachts
+              </div>
+            </div>
+            <div className="flex gap-8 text-[11px] uppercase tracking-[0.25em] text-paper/60">
+              <span>© 2026 Electric Yacht Market</span>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   );

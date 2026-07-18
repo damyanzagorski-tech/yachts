@@ -115,7 +115,8 @@ create table models (
     -- content
     description         text,
     hero_image_url      text,
-    gallery_urls        text[],
+    gallery_urls        text[],           -- general lifestyle/detail photos
+    color_variant_urls  text[],           -- hull colour configurator renders, one per colour option
     video_url           text,
     brochure_url         text,
 
@@ -2560,16 +2561,44 @@ update models set is_featured = true where slug = 'crooze-yachts-ez28';
 -- =====================================================================
 -- Official Crooze Yachts renders, stored in the Next.js app's
 -- public/images/ez28/ folder (paths are app-relative, served by the
--- same deployment on every domain). Gallery = the five hull colour
--- variants; hero = the white variant.
+-- same deployment on every domain). color_variant_urls = the five hull
+-- colour configurator renders; gallery_urls = curated lifestyle and
+-- interior shots; hero = the white variant.
 
 update models set
     hero_image_url = '/images/ez28/EZ_28_white.jpg',
-    gallery_urls = array[
+    color_variant_urls = array[
         '/images/ez28/EZ_28_white.jpg',
         '/images/ez28/EZ_28_green.jpg',
         '/images/ez28/EZ_28_blue.jpg',
         '/images/ez28/EZ_28_gray.jpg',
         '/images/ez28/EZ_28_black.jpg'
+    ],
+    gallery_urls = array[
+        -- atmosphere
+        '/images/ez28/EZ28_14.jpg',      -- atmospheric wide on-water side view (lead image)
+        '/images/ez28/EZ28_13.jpg',      -- white hull, misty morning bow 3/4
+        '/images/ez28/EZ28_4.jpg',       -- silver hull, calm morning anchorage
+        '/images/ez28/EZ28_5.jpg',       -- misty stern 3/4 with aft sunbed out
+        -- hull colours on the water
+        '/images/ez28/EZ28_2.jpg',       -- blue hull at anchor, 3/4 bow
+        '/images/ez28/EZ28_15.jpg',      -- blue hull stern 3/4, overcast
+        '/images/ez28/EZ28_17.jpg',      -- mint hull side profile
+        '/images/ez28/EZ28_16.jpg',      -- mint hull with rod rack & sunshade
+        -- deck configurations
+        '/images/ez28/EZ_28_shades2.jpg',-- both sunshades extended, aerial 3/4
+        '/images/ez28/EZ_28_table.jpg',  -- aft deck table & benches, sunset close-up
+        '/images/ez28/EZ28_3.jpg',       -- aft sunbed configuration, aerial 3/4
+        '/images/ez28/EZ28_12.jpg',      -- sunset stern, folding decks & furniture
+        -- aerials
+        '/images/ez28/EZ28_9.jpg',       -- top-down underway with wake
+        '/images/ez28/EZ28_10.jpg',      -- top-down at anchor, deck layout
+        -- details & interior
+        '/images/ez28/EZ28_7.jpg',       -- bow seating & table, top view
+        '/images/ez28/EZ28_11.jpg',      -- sunset aft view over the helm
+        '/images/ez28/EZ28_6.jpg',       -- helm detail with navigation display
+        '/images/ez28/EZ28_8.jpg',       -- cockpit seating interior
+        '/images/ez28/EZ28-T.jpg',       -- head/WC: basin, towel & toilet
+        '/images/ez28/EZ28-T1.jpg'       -- head/WC: top-down teak floor view
     ]
 where slug = 'crooze-yachts-ez28';

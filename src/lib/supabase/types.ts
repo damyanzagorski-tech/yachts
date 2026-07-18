@@ -62,6 +62,7 @@ export type Model = {
   description: string | null;
   hero_image_url: string | null;
   gallery_urls: string[] | null;
+  color_variant_urls: string[] | null;
   video_url: string | null;
   brochure_url: string | null;
   is_featured: boolean;

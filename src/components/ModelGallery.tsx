@@ -2,22 +2,30 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { Lightbox } from '@/components/Lightbox';
 
 /**
  * Image gallery for a model detail page: a large stage image with
  * thumbnail switching below (click or hover), in the spirit of the
- * brand reference's hull-colour configurator. Generic — driven by
- * whatever is in the model's gallery_urls; falls back to a single
- * static image when there's only one.
+ * brand reference's hull-colour configurator. Clicking the stage opens
+ * the full-screen lightbox at the active image. Generic — driven by
+ * whatever is in the model's colour-variant list; falls back to a
+ * single static image when there's only one.
  */
 export function ModelGallery({ images, alt }: { images: string[]; alt: string }) {
   const [active, setActive] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   if (images.length === 0) return null;
 
   return (
     <div>
-      <div className="relative aspect-[16/9] overflow-hidden rounded-sm bg-ink-2">
+      <button
+        type="button"
+        onClick={() => setLightboxIndex(active)}
+        aria-label="Open image in full-screen gallery"
+        className="relative block aspect-[16/9] w-full cursor-zoom-in overflow-hidden rounded-sm bg-ink-2"
+      >
         {images.map((src, i) => (
           <Image
             key={src}
@@ -29,7 +37,7 @@ export function ModelGallery({ images, alt }: { images: string[]; alt: string })
             className={`object-cover transition-opacity duration-500 ${i === active ? 'opacity-100' : 'opacity-0'}`}
           />
         ))}
-      </div>
+      </button>
 
       {images.length > 1 && (
         <div className="mt-3 grid grid-cols-5 gap-3">
@@ -52,6 +60,17 @@ export function ModelGallery({ images, alt }: { images: string[]; alt: string })
           ))}
         </div>
       )}
+
+      <Lightbox
+        images={images}
+        alt={alt}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onIndexChange={(i) => {
+          setLightboxIndex(i);
+          setActive(i);
+        }}
+      />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { buildAlternates } from '@/lib/seo';
 import { ModelGallery } from '@/components/ModelGallery';
+import { ModelLifestyleGallery } from '@/components/ModelLifestyleGallery';
 import type { ModelPowertrain, ModelWithManufacturer } from '@/lib/supabase/types';
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -66,11 +67,13 @@ export default async function ModelDetailPage({ params }: PageProps) {
   if (!model) notFound();
 
   const powertrains = await getPowertrains(model.id);
-  // Hero image leads, followed by the rest of the gallery (de-duped in
-  // case the hero is also listed in gallery_urls).
-  const galleryImages = [
-    ...new Set([...(model.hero_image_url ? [model.hero_image_url] : []), ...(model.gallery_urls ?? [])]),
+  // Colour configurator: hero image leads, followed by the hull colour
+  // variants (de-duped in case the hero is also listed among them).
+  const variantImages = [
+    ...new Set([...(model.hero_image_url ? [model.hero_image_url] : []), ...(model.color_variant_urls ?? [])]),
   ];
+  // General lifestyle/detail gallery, rendered full-width further down.
+  const lifestyleImages = (model.gallery_urls ?? []).filter((src) => !variantImages.includes(src));
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-16">
@@ -99,9 +102,9 @@ export default async function ModelDetailPage({ params }: PageProps) {
         </div>
 
         <div>
-          {galleryImages.length > 0 && (
+          {variantImages.length > 0 && (
             <div className="mb-10">
-              <ModelGallery images={galleryImages} alt={`${model.manufacturers.name} ${model.name}`} />
+              <ModelGallery images={variantImages} alt={`${model.manufacturers.name} ${model.name}`} />
             </div>
           )}
 
@@ -158,6 +161,21 @@ export default async function ModelDetailPage({ params }: PageProps) {
           )}
         </div>
       </div>
+
+      {lifestyleImages.length > 0 && (
+        <section className="mt-24">
+          <span className="marker">Gallery</span>
+          <h2 className="mt-3 font-serif text-3xl font-light tracking-tight">
+            The {model.name}, <em className="text-copper">up close.</em>
+          </h2>
+          <div className="mt-8">
+            <ModelLifestyleGallery
+              images={lifestyleImages}
+              alt={`${model.manufacturers.name} ${model.name}`}
+            />
+          </div>
+        </section>
+      )}
     </main>
   );
 }

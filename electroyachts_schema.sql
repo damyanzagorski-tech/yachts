@@ -2563,10 +2563,11 @@ update models set is_featured = true where slug = 'crooze-yachts-ez28';
 -- public/images/ez28/ folder (paths are app-relative, served by the
 -- same deployment on every domain). color_variant_urls = the five hull
 -- colour configurator renders; gallery_urls = curated lifestyle and
--- interior shots; hero = the white variant.
+-- interior shots; hero = the black variant (the homepage cover photo,
+-- and the configurator's lead image on the model page).
 
 update models set
-    hero_image_url = '/images/ez28/EZ_28_white.jpg',
+    hero_image_url = '/images/ez28/EZ_28_black.jpg',
     color_variant_urls = array[
         '/images/ez28/EZ_28_white.jpg',
         '/images/ez28/EZ_28_green.jpg',

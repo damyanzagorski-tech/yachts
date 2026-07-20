@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { buildAlternates } from '@/lib/seo';
+import { VerifiedBadge } from '@/components/VerifiedBadge';
 import type { Manufacturer } from '@/lib/supabase/types';
 
 export async function generateMetadata() {
@@ -67,6 +68,11 @@ export default async function ManufacturersPage() {
             <Link href={`/manufacturers/${m.slug}`} className="font-serif text-lg hover:text-copper">
               {m.name}
             </Link>
+            {m.status === 'partner' && (
+              <span className="ml-2">
+                <VerifiedBadge inline />
+              </span>
+            )}
             <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
               {m.country ?? 'Unknown country'} ·{' '}
               {m.product_line === 'electric_only' ? 'Electric only' : 'Mixed'}

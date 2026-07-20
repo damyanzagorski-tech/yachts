@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { buildAlternates } from '@/lib/seo';
+import { VerifiedBadge } from '@/components/VerifiedBadge';
 import type { Manufacturer, ModelWithManufacturer } from '@/lib/supabase/types';
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -64,10 +65,17 @@ export default async function ManufacturerDetailPage({ params }: PageProps) {
       <div className="mt-10 grid gap-12 md:grid-cols-[1fr_1.3fr] md:gap-20">
         <div className="md:sticky md:top-10 md:self-start">
           <span className="marker">{manufacturer.country ?? 'Manufacturer'}</span>
-          <h1 className="mt-3 font-serif text-4xl font-light tracking-tight">{manufacturer.name}</h1>
+          <h1 className="mt-3 font-serif text-4xl font-light tracking-tight">
+            {manufacturer.name}
+            {manufacturer.status === 'partner' && (
+              <span className="ml-3">
+                <VerifiedBadge inline />
+              </span>
+            )}
+          </h1>
           <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
             {manufacturer.product_line === 'electric_only' ? 'Electric only' : 'Mixed electric/conventional'}
-            {manufacturer.is_verified && ' · Verified'}
+            {manufacturer.is_verified && ' · Specs verified'}
           </p>
 
           {manufacturer.website && (

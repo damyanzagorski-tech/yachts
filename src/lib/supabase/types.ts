@@ -56,6 +56,11 @@ export type Model = {
   top_speed_knots: number | null;
   range_nm: number | null;
   charging_time_hours: number | null;
+  cabins: number | null;
+  berths: number | null;
+  air_draught_m: number | null;
+  keel_type: string | null;
+  equipment: string[];
   price_from_eur: number | null;
   price_to_eur: number | null;
   ce_category: string | null;

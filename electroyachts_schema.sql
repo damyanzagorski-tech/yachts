@@ -107,6 +107,13 @@ create table models (
     range_nm            numeric(6,2),                   -- nautical miles at cruise speed
     charging_time_hours numeric(5,2),
 
+    -- accommodation & hull (marketplace filters)
+    cabins              smallint,
+    berths              smallint,
+    air_draught_m       numeric(5,2),
+    keel_type           text,             -- see CHECK below; 'none' = keel-less planing hull, NULL = unknown/N-A
+    equipment           text[] not null default '{}',   -- canonical kebab-case slugs from src/lib/marketplace/equipment.ts
+
     -- commercial
     price_from_eur      numeric(12,2),
     price_to_eur        numeric(12,2),
@@ -127,7 +134,12 @@ create table models (
     status              text not null default 'active',  -- active / discontinued / upcoming
 
     created_at          timestamptz not null default now(),
-    updated_at          timestamptz not null default now()
+    updated_at          timestamptz not null default now(),
+
+    constraint chk_models_keel_type check (
+        keel_type is null or keel_type in
+        ('fin','full','bulb','wing','swing','lifting','centreboard','daggerboard','twin','none')
+    )
 );
 
 create trigger trg_models_updated_at
@@ -139,6 +151,7 @@ create index idx_models_category on models(category);
 create index idx_models_propulsion on models(propulsion_type);
 create index idx_models_market_tier on models(market_tier);
 create index idx_models_price on models(price_from_eur);
+create index idx_models_equipment on models using gin (equipment);
 
 -- =====================================================================
 -- 2b. MODEL POWERTRAINS (detailed, queryable engine/motor data)

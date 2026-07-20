@@ -12,7 +12,15 @@ import { Lightbox } from '@/components/Lightbox';
  * whatever is in the model's colour-variant list; falls back to a
  * single static image when there's only one.
  */
-export function ModelGallery({ images, alt }: { images: string[]; alt: string }) {
+export function ModelGallery({
+  images,
+  alt,
+  badge,
+}: {
+  images: string[];
+  alt: string;
+  badge?: React.ReactNode;
+}) {
   const [active, setActive] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -26,6 +34,7 @@ export function ModelGallery({ images, alt }: { images: string[]; alt: string })
         aria-label="Open image in full-screen gallery"
         className="relative block aspect-[16/9] w-full cursor-zoom-in overflow-hidden rounded-sm bg-ink-2"
       >
+        {badge}
         {images.map((src, i) => (
           <Image
             key={src}

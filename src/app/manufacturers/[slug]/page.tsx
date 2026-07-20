@@ -22,7 +22,7 @@ async function getModelsForManufacturer(manufacturerId: string): Promise<ModelWi
   const supabase = createSupabaseServerClient();
   const { data } = await supabase
     .from('models')
-    .select('*, manufacturers(id, name, slug, logo_url, country)')
+    .select('*, manufacturers(id, name, slug, logo_url, country, is_verified, status)')
     .eq('manufacturer_id', manufacturerId)
     .order('name');
   return (data as unknown as ModelWithManufacturer[]) ?? [];

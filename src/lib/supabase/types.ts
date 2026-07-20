@@ -78,7 +78,7 @@ export type Model = {
 };
 
 export type ModelWithManufacturer = Model & {
-  manufacturers: Pick<Manufacturer, 'id' | 'name' | 'slug' | 'logo_url' | 'country'>;
+  manufacturers: Pick<Manufacturer, 'id' | 'name' | 'slug' | 'logo_url' | 'country' | 'is_verified' | 'status'>;
 };
 
 export type ModelPowertrain = {

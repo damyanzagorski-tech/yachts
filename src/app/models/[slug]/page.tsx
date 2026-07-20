@@ -4,6 +4,7 @@ import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { buildAlternates } from '@/lib/seo';
 import { ModelGallery } from '@/components/ModelGallery';
 import { ModelLifestyleGallery } from '@/components/ModelLifestyleGallery';
+import { VerifiedBadge } from '@/components/VerifiedBadge';
 import type { ModelPowertrain, ModelWithManufacturer } from '@/lib/supabase/types';
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -12,7 +13,7 @@ async function getModel(slug: string): Promise<ModelWithManufacturer | null> {
   const supabase = createSupabaseServerClient();
   const { data } = await supabase
     .from('models')
-    .select('*, manufacturers(id, name, slug, logo_url, country)')
+    .select('*, manufacturers(id, name, slug, logo_url, country, is_verified, status)')
     .eq('slug', slug)
     .maybeSingle();
   return data as unknown as ModelWithManufacturer | null;
@@ -104,7 +105,11 @@ export default async function ModelDetailPage({ params }: PageProps) {
         <div>
           {variantImages.length > 0 && (
             <div className="mb-10">
-              <ModelGallery images={variantImages} alt={`${model.manufacturers.name} ${model.name}`} />
+              <ModelGallery
+                images={variantImages}
+                alt={`${model.manufacturers.name} ${model.name}`}
+                badge={model.manufacturers.status === 'partner' ? <VerifiedBadge /> : undefined}
+              />
             </div>
           )}
 

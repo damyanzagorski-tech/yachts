@@ -12,7 +12,7 @@ async function getModels(slugs: string[]): Promise<ModelWithManufacturer[]> {
   const supabase = createSupabaseServerClient();
   const { data } = await supabase
     .from('models')
-    .select('*, manufacturers(id, name, slug, logo_url, country)')
+    .select('*, manufacturers(id, name, slug, logo_url, country, is_verified, status)')
     .in('slug', slugs);
 
   const found = (data as unknown as ModelWithManufacturer[]) ?? [];

@@ -4,6 +4,7 @@ import { headers } from 'next/headers';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { buildAlternates } from '@/lib/seo';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { VerifiedBadge } from '@/components/VerifiedBadge';
 import { CATEGORY_LABELS, type BoatCategory, type ModelWithManufacturer } from '@/lib/supabase/types';
 import { CONTENT_TYPE_LABELS, type ContentPageWithGroup } from '@/lib/supabase/content';
 
@@ -46,7 +47,7 @@ async function getFeaturedModels(): Promise<ModelWithManufacturer[]> {
   try {
     const { data: featured } = await supabase
       .from('models')
-      .select('*, manufacturers(id, name, slug, logo_url, country)')
+      .select('*, manufacturers(id, name, slug, logo_url, country, is_verified, status)')
       .eq('is_featured', true)
       .order('created_at', { ascending: false })
       .limit(4);
@@ -56,7 +57,7 @@ async function getFeaturedModels(): Promise<ModelWithManufacturer[]> {
 
     const { data: recent } = await supabase
       .from('models')
-      .select('*, manufacturers(id, name, slug, logo_url, country)')
+      .select('*, manufacturers(id, name, slug, logo_url, country, is_verified, status)')
       .eq('is_featured', false)
       .order('created_at', { ascending: false })
       .limit(4 - models.length);
@@ -296,6 +297,7 @@ export default async function Home() {
                   <Link href={`/models/${model.slug}`} className="block">
                     {model.hero_image_url && (
                       <div className="relative aspect-[16/9] overflow-hidden">
+                        {model.manufacturers?.status === 'partner' && <VerifiedBadge />}
                         <Image
                           src={model.hero_image_url}
                           alt={`${model.manufacturers?.name} ${model.name}`}

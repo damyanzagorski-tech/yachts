@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { VerifiedBadge } from '@/components/VerifiedBadge';
 import type { MarketplaceModel } from '@/lib/marketplace/filters';
 
 const eurFormatter = new Intl.NumberFormat('en-EU', {
@@ -38,6 +39,7 @@ export function ModelCard({
     <li className="overflow-hidden rounded-lg border border-rule bg-ink-2 transition-colors hover:border-copper">
       <Link href={`/models/${model.slug}`} className="block">
         <div className="relative aspect-[4/3] overflow-hidden bg-ink-soft">
+          {model.manufacturers?.status === 'partner' && <VerifiedBadge />}
           {model.hero_image_url ? (
             <Image
               src={model.hero_image_url}

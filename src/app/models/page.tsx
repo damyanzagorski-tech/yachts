@@ -34,7 +34,7 @@ async function getModels(): Promise<{ data: MarketplaceModel[]; error: string | 
     const supabase = createSupabaseServerClient();
     const { data, error } = await supabase
       .from('models')
-      .select('*, manufacturers(id, name, slug, logo_url, country), model_powertrains(motor_count, is_primary)')
+      .select('*, manufacturers(id, name, slug, logo_url, country, is_verified, status), model_powertrains(motor_count, is_primary)')
       .order('name');
 
     if (error) return { data: [], error: error.message };

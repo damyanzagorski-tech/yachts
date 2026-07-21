@@ -5,6 +5,7 @@ import { buildAlternates } from '@/lib/seo';
 import { ModelGallery } from '@/components/ModelGallery';
 import { ModelLifestyleGallery } from '@/components/ModelLifestyleGallery';
 import { VerifiedBadge } from '@/components/VerifiedBadge';
+import { LeadForm } from '@/components/LeadForm';
 import type { ModelPowertrain, ModelWithManufacturer } from '@/lib/supabase/types';
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -99,6 +100,13 @@ export default async function ModelDetailPage({ params }: PageProps) {
 
           <p className="mt-4 font-serif text-2xl font-light italic text-copper">{formatPriceRange(model)}</p>
 
+          <a
+            href="#enquire"
+            className="mt-5 inline-block rounded-full bg-copper px-6 py-2.5 text-sm font-semibold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-copper-soft"
+          >
+            Request a quote
+          </a>
+
           {model.description && <p className="mt-6 max-w-md text-muted">{model.description}</p>}
         </div>
 
@@ -181,6 +189,10 @@ export default async function ModelDetailPage({ params }: PageProps) {
           </div>
         </section>
       )}
+
+      <section id="enquire" className="mx-auto mt-24 max-w-2xl scroll-mt-24">
+        <LeadForm modelId={model.id} modelName={model.name} />
+      </section>
     </main>
   );
 }

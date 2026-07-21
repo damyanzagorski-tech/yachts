@@ -104,6 +104,32 @@ export type ModelPowertrain = {
   updated_at: string;
 };
 
+export type LeadStatus = 'new' | 'qualified' | 'call_booked' | 'offer_sent' | 'won' | 'lost';
+export type LeadSource = 'organic_seo' | 'paid_ads' | 'referral' | 'direct' | 'newsletter' | 'partner' | 'other';
+
+export type Lead = {
+  id: string;
+  full_name: string | null;
+  email: string | null;
+  phone: string | null;
+  country: string | null;
+  preferred_language: string | null;
+  interested_model_id: string | null;
+  interested_category: BoatCategory | null;
+  budget_min_eur: number | null;
+  budget_max_eur: number | null;
+  purchase_timeframe: string | null;
+  source: LeadSource;
+  source_domain: string | null;
+  utm_campaign: string | null;
+  lead_score: number | null;
+  status: LeadStatus;
+  notes: string | null;
+  gdpr_consent_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -111,27 +137,42 @@ export type Database = {
         Row: Manufacturer;
         Insert: Partial<Manufacturer>;
         Update: Partial<Manufacturer>;
+        Relationships: [];
       };
       models: {
         Row: Model;
         Insert: Partial<Model>;
         Update: Partial<Model>;
+        Relationships: [];
       };
       model_powertrains: {
         Row: ModelPowertrain;
         Insert: Partial<ModelPowertrain>;
         Update: Partial<ModelPowertrain>;
+        Relationships: [];
+      };
+      leads: {
+        Row: Lead;
+        Insert: Partial<Lead>;
+        Update: Partial<Lead>;
+        Relationships: [];
       };
       content_page_groups: {
         Row: ContentPageGroup;
         Insert: Partial<ContentPageGroup>;
         Update: Partial<ContentPageGroup>;
+        Relationships: [];
       };
       content_pages: {
         Row: ContentPage;
         Insert: Partial<ContentPage>;
         Update: Partial<ContentPage>;
+        Relationships: [];
       };
     };
+    // supabase-js's GenericSchema needs these keys present for its
+    // Insert/Update type inference to resolve (otherwise inserts type as never[])
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
   };
 };

@@ -240,6 +240,10 @@ create table leads (
     status                lead_status not null default 'new',
     notes                 text,
 
+    -- GDPR: when the visitor ticked the required consent checkbox on the
+    -- public enquiry form (EU audience)
+    gdpr_consent_at       timestamptz,
+
     created_at            timestamptz not null default now(),
     updated_at            timestamptz not null default now()
 );
@@ -455,12 +459,14 @@ on deals for all
 using (is_staff())
 with check (is_staff());
 
--- Note: if the public site needs to INSERT a new lead (e.g. a contact
--- form submission) from an anonymous visitor, add a narrow additional
--- policy such as:
---   create policy "leads_public_insert" on leads for insert
---   with check (true);
--- and keep SELECT/UPDATE/DELETE restricted to staff as above.
+-- Public enquiry form (model pages) inserts with the anon key. INSERT
+-- only — SELECT/UPDATE/DELETE stay staff-only via leads_staff_only.
+-- with check constrains inserts to fresh, unscored rows so the anon role
+-- can't inject pre-qualified/scored leads.
+create policy "leads_public_insert"
+on leads for insert
+to anon
+with check (status = 'new' and lead_score = 0);
 
 -- =====================================================================
 -- SEED DATA — Manufacturers

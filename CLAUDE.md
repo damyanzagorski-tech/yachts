@@ -122,10 +122,23 @@ Damyan owns ~61 domains for this project. Full mapping lives in
 `domains.config.ts` — read that file for the authoritative list, don't
 duplicate it here as it will drift out of sync. Summary of the decisions:
 
-- **Global/umbrella brand:** `electricyachtmarket.com` — chosen as PRIMARY
-  domain to build out fully first, per the "build one domain end-to-end
-  before replicating" rule above. `electricyachts.co.uk` held in reserve
-  for a UK-specific push later.
+- **Corporate/holding brand: NAUTERIA** (decided 2026-07). Damyan owns
+  `nauteria.com` and `nauteria.eu`. Nauteria is the umbrella company brand
+  that owns/operates all the local lead-generation sites. Its scope:
+  counterparty identity for manufacturer commission agreements and
+  invoicing, a partner-facing hub (sell the supply side: qualified leads,
+  commission model, featured placement), the shared legal layer (privacy/
+  terms/Impressum linked from every local site's footer — "a Nauteria
+  brand"), and later the Phase 4 manufacturer portal + any data-platform
+  surface (e.g. partners.nauteria.com). It is deliberately NOT a content
+  site — five pages max (home, partners, about, contact, legal), no boat
+  content, no SEO ambitions beyond its own name, so it never competes
+  with the consumer sites. This supersedes `electricmarinegroup.com` as
+  the corporate-layer candidate.
+- **Global/umbrella consumer brand:** `electricyachtmarket.com` — chosen
+  as PRIMARY domain to build out fully first, per the "build one domain
+  end-to-end before replicating" rule above. `electricyachts.co.uk` held
+  in reserve for a UK-specific push later.
 - **Phase 1 language domains (15):** one leading domain chosen per market
   from Damyan's purchased variants — always the non-hyphenated version,
   and always the ccTLD over .com where one was purchased. E.g.
@@ -136,10 +149,12 @@ duplicate it here as it will drift out of sync. Summary of the decisions:
   tied with Germany for largest electric-boat market share in Europe
   (~22-24% vs Germany's ~32-34%, per Future Market Insights 2025 data).
   Worth acquiring a `.no` domain if Phase 2 expands.
-- Corporate/holding-layer domains (`electricmarinegroup.com`, etc.) and
-  single-vertical niche domains (`electricdayboats.com`,
-  `electriccatamarans.eu`) exist in the portfolio but are NOT yet assigned
-  a role in `domains.config.ts` — decide their purpose before Phase 2.
+- Former corporate-layer candidates (`electricmarinegroup.com`, etc. —
+  superseded by Nauteria, see above) and single-vertical niche domains
+  (`electricdayboats.com`, `electriccatamarans.eu`) exist in the
+  portfolio but are NOT yet assigned a role in `domains.config.ts` —
+  decide their purpose (redirect to Nauteria, park, or niche use) before
+  Phase 2.
 
 ## Frontend scaffolding provided
 Three starter files are included alongside this CLAUDE.md, ready to drop

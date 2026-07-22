@@ -2,6 +2,7 @@
 
 import { headers } from 'next/headers';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { notifyLead } from '@/lib/leads/notifyLead';
 
 export type LeadFormState = {
   status: 'idle' | 'success' | 'error';
@@ -78,6 +79,26 @@ export async function submitLead(_prev: LeadFormState, formData: FormData): Prom
       console.error('Lead insert failed:', error.message);
       return { status: 'error', message: 'Something went wrong — please try again or email us directly.' };
     }
+
+    // Awaited (serverless may freeze after return) but never throws —
+    // a failed email must not fail the submission; the row is already saved.
+    let modelName: string | null = null;
+    if (modelId) {
+      const { data: model } = await supabase.from('models').select('name').eq('id', modelId).maybeSingle();
+      modelName = model?.name ?? null;
+    }
+    await notifyLead({
+      fullName,
+      email,
+      phone,
+      country,
+      timeframe: TIMEFRAMES.has(timeframeRaw) ? timeframeRaw : null,
+      message,
+      modelName,
+      sourceDomain: host,
+      language,
+    });
+
     return { status: 'success' };
   } catch (err) {
     console.error('Lead insert threw:', err);

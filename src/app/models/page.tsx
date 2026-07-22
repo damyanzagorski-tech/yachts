@@ -44,6 +44,12 @@ async function getModels(): Promise<{ data: MarketplaceModel[]; error: string | 
       const primary = model_powertrains?.find((p) => p.is_primary) ?? model_powertrains?.[0];
       return { ...model, engine_count: primary?.motor_count ?? null };
     });
+    // Verified partners (green badge) lead the listing; the rest stay A-Z.
+    models.sort((a, b) => {
+      const aPartner = a.manufacturers?.status === 'partner' ? 0 : 1;
+      const bPartner = b.manufacturers?.status === 'partner' ? 0 : 1;
+      return aPartner - bPartner || a.name.localeCompare(b.name);
+    });
     return { data: models, error: null };
   } catch (err) {
     return { data: [], error: err instanceof Error ? err.message : 'Unknown error' };

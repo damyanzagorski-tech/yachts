@@ -1,6 +1,8 @@
+import { Fragment } from 'react';
 import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { buildAlternates } from '@/lib/seo';
+import { EQUIPMENT_GROUPS } from '@/lib/marketplace/equipment';
 import type { ModelWithManufacturer } from '@/lib/supabase/types';
 
 const MAX_COMPARE = 4;
@@ -41,6 +43,8 @@ const ROWS: Row[] = [
   { label: 'Length', value: (m) => (m.length_m ? `${m.length_m} m` : '—') },
   { label: 'Beam', value: (m) => (m.beam_m ? `${m.beam_m} m` : '—') },
   { label: 'Passenger capacity', value: (m) => (m.passenger_capacity ? `${m.passenger_capacity}` : '—') },
+  { label: 'Cabins', value: (m) => (m.cabins !== null ? `${m.cabins}` : '—') },
+  { label: 'Berths', value: (m) => (m.berths !== null ? `${m.berths}` : '—') },
   { label: 'Battery', value: (m) => (m.battery_kwh ? `${m.battery_kwh} kWh` : '—') },
   { label: 'Motor power', value: (m) => (m.motor_power_kw ? `${m.motor_power_kw} kW` : '—') },
   { label: 'Top speed', value: (m) => (m.top_speed_knots ? `${m.top_speed_knots} knots` : '—') },
@@ -66,6 +70,14 @@ export default async function ComparePage({ searchParams }: PageProps) {
   const cappedSlugs = requestedSlugs.slice(0, MAX_COMPARE);
 
   const models = await getModels(cappedSlugs);
+
+  // Equipment section: union of items any compared model carries, grouped.
+  // Groups with nothing to show are hidden (same >=1-record rule as the
+  // marketplace filters); data is sparse for some manufacturers.
+  const equipmentGroups = EQUIPMENT_GROUPS.map((g) => ({
+    group: g.group,
+    items: g.items.filter((item) => models.some((m) => m.equipment?.includes(item.slug))),
+  })).filter((g) => g.items.length > 0);
 
   if (requestedSlugs.length === 0) {
     return (
@@ -137,9 +149,49 @@ export default async function ComparePage({ searchParams }: PageProps) {
                 ))}
               </tr>
             ))}
+
+            {equipmentGroups.map((group) => (
+              <Fragment key={group.group}>
+                <tr>
+                  <th
+                    colSpan={models.length + 1}
+                    className="border-b border-rule-strong bg-ink-soft px-4 pb-2 pt-5 text-left text-xs font-semibold uppercase tracking-[0.2em] text-copper-soft"
+                  >
+                    {group.group}
+                  </th>
+                </tr>
+                {group.items.map((item) => (
+                  <tr key={item.slug}>
+                    <th className="border-b border-rule px-4 py-2 text-left text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+                      {item.label}
+                    </th>
+                    {models.map((m) => (
+                      <td key={m.id} className="border-b border-rule px-4 py-2">
+                        {m.equipment?.includes(item.slug) ? (
+                          <span className="font-semibold text-copper" aria-label="Yes">
+                            ✓
+                          </span>
+                        ) : (
+                          <span className="text-muted" aria-label="No">
+                            —
+                          </span>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </Fragment>
+            ))}
           </tbody>
         </table>
       </div>
+
+      {equipmentGroups.length > 0 && (
+        <p className="mt-4 text-xs text-muted">
+          Equipment reflects what each manufacturer lists as standard or available for the model —
+          absence of a check may mean unpublished rather than unavailable.
+        </p>
+      )}
     </main>
   );
 }
